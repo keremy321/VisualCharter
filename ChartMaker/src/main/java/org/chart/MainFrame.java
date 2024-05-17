@@ -88,6 +88,7 @@ public class MainFrame extends JFrame implements ActionListener {
         this.setTitle("Chart");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(920, 920);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setResizable(false);
 

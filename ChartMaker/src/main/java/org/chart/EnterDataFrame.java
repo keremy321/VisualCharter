@@ -2,7 +2,6 @@ package org.chart;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,6 +19,7 @@ public class EnterDataFrame extends JFrame implements ActionListener {
     JTextField textFieldNumberOfColumns;
 
     DefaultTableModel tableModel;
+    JTable table;
     JScrollPane scrollPane;
 
     JLabel labelException;
@@ -193,7 +193,7 @@ public class EnterDataFrame extends JFrame implements ActionListener {
 
         tableModel = new DefaultTableModel();
 
-        JTable table = new JTable(tableModel);
+        table = new JTable(tableModel);
         table.setFont(new Font("Arial Black", Font.PLAIN, 16));
         table.setBackground(new Color(0x217346));
         table.setForeground(Color.WHITE);
@@ -206,6 +206,13 @@ public class EnterDataFrame extends JFrame implements ActionListener {
         table.setCellSelectionEnabled(true);
         table.setSelectionBackground(new Color(0x0E5C2F));
         table.setSelectionForeground(Color.WHITE);
+
+        table.getTableHeader().setDefaultRenderer(new EditableHeaderRenderer());
+        new HeaderEditor(table);
+
+        CenterTextCellRenderer centerRenderer = new CenterTextCellRenderer();
+        table.setDefaultRenderer(Object.class, centerRenderer);
+
 
         scrollPane = new JScrollPane(table);
         scrollPane.setBounds(70, 320, 780, 450);
@@ -294,6 +301,7 @@ public class EnterDataFrame extends JFrame implements ActionListener {
         this.setTitle("Enter Data Frame");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(920, 920);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setResizable(false);
     }
@@ -326,11 +334,12 @@ public class EnterDataFrame extends JFrame implements ActionListener {
                 int rowCount = Integer.parseInt(textFieldNumberOfRows.getText());
                 int columnCount = Integer.parseInt(textFieldNumberOfColumns.getText());
 
-                tableModel.setRowCount(rowCount);
+                tableModel.setRowCount(rowCount - 1);
                 tableModel.setColumnCount(columnCount);
 
                 labelException.setVisible(false);
             }
+
             catch (Exception exception){
                 labelException.setText("Error: Please input only integer values in the text fields.");
                 labelException.setVisible(true);
@@ -340,7 +349,13 @@ public class EnterDataFrame extends JFrame implements ActionListener {
         if (e.getSource() == buttonCreate){
             this.dispose();
             ChartFrame chartFrame = new ChartFrame();
+
+            for (int i = 0; i < table.getColumnCount(); i++){
+                System.out.println(table.getColumnName(i));
+            }
+
         }
     }
 }
+
 

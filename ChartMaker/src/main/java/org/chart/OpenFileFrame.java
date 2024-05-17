@@ -2,6 +2,7 @@ package org.chart;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,7 +26,9 @@ public class OpenFileFrame extends JFrame implements ActionListener {
     DefaultTableModel tableModel;
 
     int rowsCount;
-    int columnCount;
+    int columnsCount;
+
+    String filePath;
 
     OpenFileFrame(){
 
@@ -194,10 +197,7 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         textFieldNumberOfColumns.setHorizontalAlignment(JTextField.CENTER);
         textFieldNumberOfColumns.setEditable(false);
 
-        String [][] data = {{"1", "Math", "80"}, {"2", "Literature", "90"}};
-        String [] header = {"ID", "Lesson", "Grade"};
-
-        tableModel = new DefaultTableModel(data, header){
+        tableModel = new DefaultTableModel(){
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -213,12 +213,15 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         table.getTableHeader().setBackground(new Color(0x0E5C2F));
         table.getTableHeader().setForeground(Color.WHITE);
         rowsCount = table.getRowCount();
-        columnCount = table.getColumnCount();
+        columnsCount = table.getColumnCount();
         table.setColumnSelectionAllowed(false);
         table.setRowSelectionAllowed(false);
         table.setCellSelectionEnabled(true);
         table.setSelectionBackground(new Color(0x0E5C2F));
         table.setSelectionForeground(Color.WHITE);
+
+        CenterTextCellRenderer centerRenderer = new CenterTextCellRenderer();
+        table.setDefaultRenderer(Object.class, centerRenderer);
 
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(70, 320, 780, 450);
@@ -295,6 +298,7 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         this.setTitle("Open File Frame");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(920, 920);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setResizable(false);
     }
@@ -312,18 +316,11 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == buttonClear){
-            textFieldChartTitle.setText("Chart Title");
-            textFieldNumberOfRows.setText("Number of Rows");
-            textFieldNumberOfColumns.setText("Number of Columns");
-
-            tableModel.setColumnCount(0);
-            tableModel.setRowCount(0);
-
-            comboBoxChartType.setSelectedIndex(0);
+            clear();
         }
 
         if (e.getSource() == buttonOpenFile){
-            JFileChooser fileChooser = new JFileChooser();
+            JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel & CSV Files","xlsx", "csv");
             fileChooser.setFileFilter(filter);
@@ -331,11 +328,53 @@ public class OpenFileFrame extends JFrame implements ActionListener {
             int response = fileChooser.showOpenDialog(null);
 
             if (response == JFileChooser.APPROVE_OPTION){
-                File file = new File(String.valueOf(fileChooser.getSelectedFile().getAbsoluteFile()));
-                System.out.println(file);
+                clear();
 
-                textFieldNumberOfRows.setText(String.valueOf(rowsCount));
-                textFieldNumberOfColumns.setText(String.valueOf(columnCount));
+                filePath = String.valueOf(fileChooser.getSelectedFile().getAbsoluteFile());
+
+                File file = new File(filePath);
+                String fileExtension = getFileExtension(file);
+
+                ImageIcon excelIcon = new ImageIcon("src/main/java/images/excelButtonIcon.png");
+                ImageIcon csvIcon = new ImageIcon("src/main/java/images/csvButtonIcon.png");
+
+                buttonOpenFile.setHorizontalAlignment(SwingConstants.LEFT);
+                buttonOpenFile.setText(file.getName());
+
+
+                if (fileExtension.equalsIgnoreCase("xlsx")){ // If it's an Excel file...
+                    buttonOpenFile.setIcon(excelIcon);
+
+                    try {
+                        ExcelReader excelReader = new ExcelReader(filePath);
+                        rowsCount = excelReader.getRowCount();
+                        columnsCount = excelReader.getColumnCount();
+
+                        String[] headers = excelReader.headersToArray();
+                        String[][] data = excelReader.dataToArray();
+
+                        tableModel.setColumnIdentifiers(headers);
+
+                        for (int i = 0; i < data.length; i++){
+                            tableModel.addRow(data[i]);
+                        }
+                    }
+
+                    catch (Exception ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+
+                else if (fileExtension.equalsIgnoreCase("csv")){ // If it's an CSV file...
+                    buttonOpenFile.setIcon(csvIcon);
+                }
+
+                else {
+                    System.out.println("Error!");
+                }
+
+                textFieldNumberOfRows.setText( String.valueOf(rowsCount));
+                textFieldNumberOfColumns.setText(String.valueOf(columnsCount));
             }
         }
 
@@ -343,5 +382,34 @@ public class OpenFileFrame extends JFrame implements ActionListener {
             this.dispose();
             ChartFrame chartFrame = new ChartFrame();
         }
+    }
+
+    private static String getFileExtension(File file) {
+        String fileName = file.getName();
+        int dotIndex = fileName.lastIndexOf('.');
+
+        if (dotIndex == -1 || dotIndex == 0 || dotIndex == fileName.length() - 1) {
+            return "";
+        }
+        else {
+            return fileName.substring(dotIndex + 1);
+        }
+    }
+
+    public void clear(){
+        textFieldChartTitle.setText("Chart Title");
+        textFieldNumberOfRows.setText("Number of Rows");
+        textFieldNumberOfColumns.setText("Number of Columns");
+
+        tableModel.setColumnCount(0);
+        tableModel.setRowCount(0);
+
+        comboBoxChartType.setSelectedIndex(0);
+
+        buttonOpenFile.setIcon(null);
+        buttonOpenFile.setText("<html><div style='text-align: center;'>Open File</div></html>");
+        buttonOpenFile.setHorizontalAlignment(SwingConstants.CENTER);
+
+        filePath = null;
     }
 }

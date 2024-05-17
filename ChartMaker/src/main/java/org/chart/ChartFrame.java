@@ -1,6 +1,8 @@
 package org.chart;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +13,8 @@ public class ChartFrame extends JFrame implements ActionListener {
     JButton buttonEnterData;
     JButton buttonClear;
     JButton button;
+
+    JScrollPane scrollPane;
 
     JButton buttonSave;
 
@@ -113,7 +117,7 @@ public class ChartFrame extends JFrame implements ActionListener {
         button.addMouseListener(new ButtonMouseListenerMenu(button, labelButtonEffect));
         button.setContentAreaFilled(false);
 
-        JScrollPane scrollPane = new JScrollPane();
+        scrollPane = new JScrollPane();
         scrollPane.setBounds(70, 146, 780, 450);
         scrollPane.setBackground(new Color(0x363636));
         scrollPane.getViewport().setBackground(new Color(0x363636));
@@ -161,6 +165,7 @@ public class ChartFrame extends JFrame implements ActionListener {
         this.setTitle("Open File Frame");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(920, 920);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setResizable(false);
     }
@@ -175,6 +180,19 @@ public class ChartFrame extends JFrame implements ActionListener {
         if (e.getSource() == buttonEnterData){
             this.dispose();
             EnterDataFrame enterDataFrame = new EnterDataFrame();
+        }
+
+        if (e.getSource() == buttonSave){
+            JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG & JPG Files","png", "jpg");
+            fileChooser.setFileFilter(filter);
+
+            int response = fileChooser.showSaveDialog(null);
+
+            if (response == JFileChooser.APPROVE_OPTION){
+
+            }
         }
     }
 
