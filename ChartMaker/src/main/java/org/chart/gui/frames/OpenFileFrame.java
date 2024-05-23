@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.net.URL;
 
 public class OpenFileFrame extends JFrame implements ActionListener {
     JButton buttonBack;
@@ -32,57 +33,68 @@ public class OpenFileFrame extends JFrame implements ActionListener {
 
     DefaultTableModel tableModel;
 
+    JLabel labelException;
+
     int rowsCount;
     int columnsCount;
 
     String filePath;
 
-    OpenFileFrame(){
-
+    public OpenFileFrame(){
         JPanel panelMenu = new JPanel();
         panelMenu.setBackground(new Color(0x363636));
-        panelMenu.setBounds(0, 50, 920, 60);
+        panelMenu.setBounds(0, 40, 800, 50);
         panelMenu.setLayout(null);
 
         CirclePanel panelCircle = new CirclePanel();
-        panelCircle.setBounds(400, 30, 100, 100);
+        panelCircle.setBounds(360, 25, 80, 80);
 
-        ImageIcon lineGreen = new ImageIcon("src/main/java/images/greenLine.png");
+        ImageIcon lineGreen = null;
+        try {
+            URL lineGreenURL = getClass().getResource("/greenLine.png");
+            if (lineGreenURL != null) {
+                lineGreen = new ImageIcon(lineGreenURL);
+            } else {
+                System.err.println("Resource not found: /greenLine.png");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         JLabel labelMenuLine1 = new JLabel();
         labelMenuLine1.setIcon(lineGreen);
-        labelMenuLine1.setBounds(8, 65, 60, 30);
+        labelMenuLine1.setBounds(17, 55, 60, 20);
 
         JLabel labelMenuLine2 = new JLabel();
         labelMenuLine2.setIcon(lineGreen);
-        labelMenuLine2.setBounds(195, 65, 60, 30);
+        labelMenuLine2.setBounds(180, 55, 60, 20);
 
         JLabel labelMenuLine3 = new JLabel();
         labelMenuLine3.setIcon(lineGreen);
-        labelMenuLine3.setBounds(518, 65, 60, 30);
+        labelMenuLine3.setBounds(343, 55, 60, 20);
 
         JLabel labelMenuLine4 = new JLabel();
         labelMenuLine4.setIcon(lineGreen);
-        labelMenuLine4.setBounds(705, 65, 60, 30);
+        labelMenuLine4.setBounds(457, 55, 60, 20);
 
         JLabel labelMenuLine5 = new JLabel();
         labelMenuLine5.setIcon(lineGreen);
-        labelMenuLine5.setBounds(382, 65, 60, 30);
+        labelMenuLine5.setBounds(620, 55, 60, 20);
 
         JLabel labelMenuLine6 = new JLabel();
         labelMenuLine6.setIcon(lineGreen);
-        labelMenuLine6.setBounds(892, 65, 60, 30);
+        labelMenuLine6.setBounds(783, 55, 60, 20);
 
         JLabel labelButtonEffectBack = new JLabel();
-        labelButtonEffectBack.setBounds(26, 60, 151, 40);
+        labelButtonEffectBack.setBounds(27, 50, 126, 30);
         labelButtonEffectBack.setBackground(new Color(0x0E5C2F));
         labelButtonEffectBack.setOpaque(false);
 
         buttonBack = new JButton("Back");
-        buttonBack.setBounds(26, 60, 151, 40);
+        buttonBack.setBounds(27, 50, 126, 30);
         buttonBack.setFocusable(false);
         buttonBack.setForeground(Color.WHITE);
-        buttonBack.setFont(new Font("Arial Black", Font.PLAIN, 20));
+        buttonBack.setFont(new Font("Arial Black", Font.PLAIN, 14));
         buttonBack.addActionListener(this);
         buttonBack.setBorderPainted(false);
         buttonBack.setBackground(new Color(0x262626));
@@ -90,15 +102,15 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         buttonBack.setContentAreaFilled(false);
 
         JLabel labelButtonEffectEnterData = new JLabel();
-        labelButtonEffectEnterData.setBounds(213, 60, 151, 40);
+        labelButtonEffectEnterData.setBounds(189, 50, 126, 30);
         labelButtonEffectEnterData.setBackground(new Color(0x0E5C2F));
         labelButtonEffectEnterData.setOpaque(false);
 
         buttonEnterData = new JButton("Enter Data");
-        buttonEnterData.setBounds(213, 60, 151, 40);
+        buttonEnterData.setBounds(189, 50, 126, 30);
         buttonEnterData.setFocusable(false);
         buttonEnterData.setForeground(Color.WHITE);
-        buttonEnterData.setFont(new Font("Arial Black", Font.PLAIN, 20));
+        buttonEnterData.setFont(new Font("Arial Black", Font.PLAIN, 14));
         buttonEnterData.addActionListener(this);
         buttonEnterData.setBorderPainted(false);
         buttonEnterData.setBackground(new Color(0x262626));
@@ -106,15 +118,15 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         buttonEnterData.setContentAreaFilled(false);
 
         JLabel labelButtonEffectClear = new JLabel();
-        labelButtonEffectClear.setBounds(536, 60, 151, 40);
+        labelButtonEffectClear.setBounds(475, 50, 126, 30);
         labelButtonEffectClear.setBackground(new Color(0x0E5C2F));
         labelButtonEffectClear.setOpaque(false);
 
         buttonClear = new JButton("Clear");
-        buttonClear.setBounds(536, 60, 151, 40);
+        buttonClear.setBounds(475, 50, 126, 30);
         buttonClear.setFocusable(false);
         buttonClear.setForeground(Color.WHITE);
-        buttonClear.setFont(new Font("Arial Black", Font.PLAIN, 20));
+        buttonClear.setFont(new Font("Arial Black", Font.PLAIN, 14));
         buttonClear.addActionListener(this);
         buttonClear.setBorderPainted(false);
         buttonClear.setBackground(new Color(0x262626));
@@ -122,33 +134,39 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         buttonClear.setContentAreaFilled(false);
 
         JLabel labelButtonEffect = new JLabel();
-        labelButtonEffect.setBounds(723, 60, 151, 40);
+        labelButtonEffect.setBounds(637, 50, 129, 30);
         labelButtonEffect.setBackground(new Color(0x0E5C2F));
         labelButtonEffect.setOpaque(false);
 
         button = new JButton("Button");
-        button.setBounds(723, 60, 151, 40);
+        button.setBounds(637, 50, 126, 30);
         button.setFocusable(false);
         button.setForeground(Color.WHITE);
-        button.setFont(new Font("Arial Black", Font.PLAIN, 20));
+        button.setFont(new Font("Arial Black", Font.PLAIN, 14));
         button.addActionListener(this);
         button.setBorderPainted(false);
         button.setBackground(new Color(0x262626));
         button.addMouseListener(new ButtonMouseListenerMenu(button, labelButtonEffect));
         button.setContentAreaFilled(false);
 
-        ImageIcon labelTextfield = new ImageIcon("src/main/java/images/textFieldName.png");
+        URL labelTextfieldURL = getClass().getResource("/greenChartTitle.png");
+        ImageIcon labelTextfield = null;
+        if (labelTextfieldURL == null) {
+            System.err.println("Resource not found: /greenChartTitle.png");
+        } else {
+            labelTextfield = new ImageIcon(labelTextfieldURL);
+        }
 
         JLabel labelTextfieldChartTitle = new JLabel();
         labelTextfieldChartTitle.setIcon(labelTextfield);
-        labelTextfieldChartTitle.setBounds(90, 146, 160, 34);
+        labelTextfieldChartTitle.setBounds(80, 120, 160, 34);
         labelTextfieldChartTitle.setText("Chart Title");
         labelTextfieldChartTitle.setFont(new Font("Arial Black", Font.PLAIN, 12));
         labelTextfieldChartTitle.setForeground(Color.WHITE);
         labelTextfieldChartTitle.setHorizontalTextPosition(JLabel.CENTER);
 
         textFieldChartTitle = new JTextField("Chart Title");
-        textFieldChartTitle.setBounds(70, 170, 300, 40);
+        textFieldChartTitle.setBounds(60, 144, 300, 40);
         textFieldChartTitle.setBackground(new Color(0x363636));
         textFieldChartTitle.setForeground(Color.WHITE);
         textFieldChartTitle.setFont(new Font("Arial Black", Font.PLAIN, 16));
@@ -156,13 +174,13 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         textFieldChartTitle.setHorizontalAlignment(JTextField.CENTER);
 
         JLabel labelButtonEffectOpenFile = new JLabel();
-        labelButtonEffectOpenFile.setBounds(550, 180, 300, 40);
+        labelButtonEffectOpenFile.setBounds(425, 144, 300, 40);
         labelButtonEffectOpenFile.setBackground(new Color(0x363636));
         labelButtonEffectOpenFile.setOpaque(false);
 
-        buttonOpenFile = new JButton("<html><div style='text-align: center;'>Open File</div></html>");
+        buttonOpenFile = new JButton("Open File");
         buttonOpenFile.setBackground(new Color(0x217346));
-        buttonOpenFile.setBounds(550, 170, 300, 40);
+        buttonOpenFile.setBounds(425, 144, 300, 40);
         buttonOpenFile.setFocusable(false);
         buttonOpenFile.setForeground(Color.WHITE);
         buttonOpenFile.setFont(new Font("Arial Black", Font.PLAIN, 16));
@@ -172,31 +190,31 @@ public class OpenFileFrame extends JFrame implements ActionListener {
 
         JLabel labelTextfieldRow = new JLabel();
         labelTextfieldRow.setIcon(labelTextfield);
-        labelTextfieldRow.setBounds(90, 226, 160, 34);
+        labelTextfieldRow.setBounds(80, 200, 160, 34);
         labelTextfieldRow.setText("Number of Rows");
         labelTextfieldRow.setFont(new Font("Arial Black", Font.PLAIN, 12));
         labelTextfieldRow.setForeground(Color.WHITE);
         labelTextfieldRow.setHorizontalTextPosition(JLabel.CENTER);
 
         textFieldNumberOfRows = new JTextField("Number of Rows");
-        textFieldNumberOfRows.setBounds(70, 250, 300, 40);
+        textFieldNumberOfRows.setBounds(60, 224, 300, 40);
         textFieldNumberOfRows.setBackground(new Color(0x363636));
         textFieldNumberOfRows.setForeground(Color.WHITE);
         textFieldNumberOfRows.setFont(new Font("Arial Black", Font.PLAIN, 16));
         textFieldNumberOfRows.setCaretColor(new Color(0xC9C9C9));
-        textFieldNumberOfRows.setHorizontalAlignment(JTextField.CENTER);
+        textFieldNumberOfRows.setHorizontalAlignment(JTextField.CENTER);;
         textFieldNumberOfRows.setEditable(false);
 
         JLabel labelTextfieldColumn = new JLabel();
         labelTextfieldColumn.setIcon(labelTextfield);
-        labelTextfieldColumn.setBounds(570, 226, 160, 34);
+        labelTextfieldColumn.setBounds(445, 200, 160, 34);
         labelTextfieldColumn.setText("Number of Columns");
         labelTextfieldColumn.setFont(new Font("Arial Black", Font.PLAIN, 12));
         labelTextfieldColumn.setForeground(Color.WHITE);
         labelTextfieldColumn.setHorizontalTextPosition(JLabel.CENTER);
 
         textFieldNumberOfColumns = new JTextField("Number of Columns");
-        textFieldNumberOfColumns.setBounds(550, 250, 300, 40);
+        textFieldNumberOfColumns.setBounds(425, 224, 300, 40);
         textFieldNumberOfColumns.setBackground(new Color(0x363636));
         textFieldNumberOfColumns.setForeground(Color.WHITE);
         textFieldNumberOfColumns.setFont(new Font("Arial Black", Font.PLAIN, 16));
@@ -212,11 +230,11 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         };
 
         JTable table = new JTable(tableModel);
-        table.setFont(new Font("Arial Black", Font.PLAIN, 16));
+        table.setFont(new Font("Arial Black", Font.PLAIN, 12));
         table.setBackground(new Color(0x217346));
         table.setForeground(Color.WHITE);
-        table.setRowHeight(36);
-        table.getTableHeader().setFont(new Font("Arial Black", Font.PLAIN, 24));
+        table.setRowHeight(24);
+        table.getTableHeader().setFont(new Font("Arial Black", Font.PLAIN, 16));
         table.getTableHeader().setBackground(new Color(0x0E5C2F));
         table.getTableHeader().setForeground(Color.WHITE);
         rowsCount = table.getRowCount();
@@ -231,18 +249,18 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         table.setDefaultRenderer(Object.class, centerRenderer);
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(70, 320, 780, 450);
+        scrollPane.setBounds(60, 296, 665, 370);
         scrollPane.setBackground(new Color(0x363636));
         scrollPane.getViewport().setBackground(new Color(0x363636));
 
         JLabel labelButtonEffectCreate = new JLabel();
-        labelButtonEffectCreate.setBounds(550, 800, 300, 40);
+        labelButtonEffectCreate.setBounds(425, 690, 300, 40);
         labelButtonEffectCreate.setBackground(new Color(0x363636));
         labelButtonEffectCreate.setOpaque(false);
 
         buttonCreate = new JButton("<html><div style='text-align: center;'>Create</div></html>");
         buttonCreate.setBackground(new Color(0x217346));
-        buttonCreate.setBounds(550, 800, 300, 40);
+        buttonCreate.setBounds(425, 690, 300, 40);
         buttonCreate.setFocusable(false);
         buttonCreate.setForeground(Color.WHITE);
         buttonCreate.setFont(new Font("Arial Black", Font.PLAIN, 16));
@@ -250,9 +268,17 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         buttonCreate.setBorderPainted(false);
         buttonCreate.addMouseListener(new ButtonMouseListener(buttonCreate, labelButtonEffectCreate));
 
+        labelException = new JLabel();
+        labelException.setVisible(false);
+        labelException.setBounds(0, 265, 800, 30);
+        labelException.setHorizontalAlignment(SwingConstants.CENTER);
+        labelException.setVerticalAlignment(SwingConstants.CENTER);
+        labelException.setFont(new Font("Arial Black", Font.PLAIN, 16));
+        labelException.setForeground(Color.RED);
+
         String[] chartTypes = {"Line Chart", "Bar Chart", "Scatter Chart", "Pie Chart"};
         comboBoxChartType = new JComboBox(chartTypes);
-        comboBoxChartType.setBounds(70, 800, 300, 40);
+        comboBoxChartType.setBounds(60, 690, 300, 40);
         comboBoxChartType.addActionListener(this);
         comboBoxChartType.setFont(new Font("Arial Black", Font.PLAIN, 16));
         comboBoxChartType.setBackground(new Color(0x217346));
@@ -289,6 +315,7 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         layeredPane.add(scrollPane);
         layeredPane.add(textFieldNumberOfRows);
         layeredPane.add(textFieldNumberOfColumns);
+
         layeredPane.add(labelMenuLine1, Integer.valueOf(1));
         layeredPane.add(labelMenuLine2, Integer.valueOf(1));
         layeredPane.add(labelMenuLine3, Integer.valueOf(1));
@@ -296,15 +323,20 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         layeredPane.add(labelMenuLine5, Integer.valueOf(1));
         layeredPane.add(labelMenuLine6, Integer.valueOf(1));
 
+
+        layeredPane.add(labelException);
+
         layeredPane.add(labelTextfieldChartTitle, Integer.valueOf(2));
         layeredPane.add(labelTextfieldRow, Integer.valueOf(2));
         layeredPane.add(labelTextfieldColumn, Integer.valueOf(2));
+
+
 
         this.getContentPane().setBackground(new Color(0x262626));
         this.setLayout(null);
         this.setTitle("Open File Frame");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(920, 920);
+        this.setSize(816, 800);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setResizable(false);
@@ -342,15 +374,14 @@ public class OpenFileFrame extends JFrame implements ActionListener {
                 File file = new File(filePath);
                 String fileExtension = getFileExtension(file);
 
-                ImageIcon excelIcon = new ImageIcon("src/main/java/images/excelButtonIcon.png");
-                ImageIcon csvIcon = new ImageIcon("src/main/java/images/csvButtonIcon.png");
+                System.out.println(file);
 
                 buttonOpenFile.setHorizontalAlignment(SwingConstants.LEFT);
                 buttonOpenFile.setText(file.getName());
 
 
                 if (fileExtension.equalsIgnoreCase("xlsx")){ // If it's an Excel file...
-                    buttonOpenFile.setIcon(excelIcon);
+                    buttonOpenFile.setIcon(new ImageIcon(getClass().getResource("/excelButtonIcon.png")));
 
                     try {
                         ExcelReader excelReader = new ExcelReader(filePath);
@@ -373,7 +404,7 @@ public class OpenFileFrame extends JFrame implements ActionListener {
                 }
 
                 else if (fileExtension.equalsIgnoreCase("csv")){ // If it's an CSV file...
-                    buttonOpenFile.setIcon(csvIcon);
+                    buttonOpenFile.setIcon(new ImageIcon(getClass().getResource("/csvButtonIcon.png")));
 
                     try {
                         CSVReader csvReader = new CSVReader(filePath);
@@ -389,6 +420,8 @@ public class OpenFileFrame extends JFrame implements ActionListener {
                             tableModel.addRow(data[i]);
                         }
 
+                        System.out.println(rowsCount);
+                        System.out.println(columnsCount);
                     }
 
                     catch (Exception ex) {
@@ -397,7 +430,7 @@ public class OpenFileFrame extends JFrame implements ActionListener {
                 }
 
                 else {
-                    System.out.println("Error!");
+                    labelException.setText("Please select an Excel or CSV file.");
                 }
 
                 textFieldNumberOfRows.setText( String.valueOf(rowsCount));
@@ -406,8 +439,20 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == buttonCreate){
-            this.dispose();
-            ChartFrame chartFrame = new ChartFrame();
+            if(filePath == null){
+                labelException.setText("Please select a file first.");
+                labelException.setVisible(true);
+            }
+
+            else if (comboBoxChartType.getSelectedIndex() == 0){
+                labelException.setText("Please select a chart type first.");
+                labelException.setVisible(true);
+            }
+
+            else {
+                this.dispose();
+                ChartFrame chartFrame = new ChartFrame();
+            }
         }
     }
 
@@ -423,7 +468,7 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         }
     }
 
-    public void clear(){
+    private void clear(){
         textFieldChartTitle.setText("Chart Title");
         textFieldNumberOfRows.setText("Number of Rows");
         textFieldNumberOfColumns.setText("Number of Columns");

@@ -7,49 +7,53 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 public class MainFrame extends JFrame implements ActionListener {
     JButton buttonEnterData;
     JButton buttonOpenFile;
 
     public MainFrame(){
-        ImageIcon icon  = new ImageIcon("src/main/java/images/icon.png");
+
+        URL iconURL = getClass().getResource("/icon.png");
+        assert iconURL != null;
+        ImageIcon icon  = new ImageIcon(iconURL);
         this.setIconImage(icon.getImage());
 
         JPanel panelTop = new JPanel();
         panelTop.setBackground(new Color(0x363636));
-        panelTop.setBounds(0, 0, 920, 250);
+        panelTop.setBounds(0, 0, 920, 200);
         panelTop.setLayout(null);
 
         JPanel panelBottom = new JPanel();
         panelBottom.setBackground(new Color(0x262626));
-        panelBottom.setBounds(0, 250, 920, 670);
+        panelBottom.setBounds(0, 200, 920, 600);
         panelBottom.setLayout(null);
 
         CirclePanel panelCircle = new CirclePanel();
-        panelCircle.setBounds(360, 150, 200, 200);
+        panelCircle.setBounds(320, 120, 160, 160);
 
         JLabel labelWelcomeText = new JLabel("Welcome to the App!");
-        labelWelcomeText.setFont(new Font("Arial Black", Font.PLAIN, 29));
+        labelWelcomeText.setFont(new Font("Arial Black", Font.PLAIN, 24));
         labelWelcomeText.setForeground(Color.WHITE);
-        labelWelcomeText.setBounds(0,0,920,300);
+        labelWelcomeText.setBounds(0,100,800,30);
         labelWelcomeText.setHorizontalAlignment(JLabel.CENTER);
 
         JLabel labelInfoText = new JLabel("This app made by ... in 2024");
         labelInfoText.setFont(new Font("Cambria Math", Font.PLAIN, 16));
         labelInfoText.setForeground(Color.WHITE);
-        labelInfoText.setBounds(0,450,920,300);
+        labelInfoText.setBounds(0,530,800,20);
         labelInfoText.setHorizontalAlignment(JLabel.CENTER);
 
         JLabel labelButtonEffectEnterData = new JLabel();
-        labelButtonEffectEnterData.setBounds(200, 250, 200, 190);
+        labelButtonEffectEnterData.setBounds(140, 220, 200, 190);
         labelButtonEffectEnterData.setBackground(new Color(0x363636));
         labelButtonEffectEnterData.setOpaque(false);
 
         //Enter Data Button
         buttonEnterData = new JButton("<html><div style='text-align: center;'>Enter<br>Data</div></html>");
         buttonEnterData.setBackground(new Color(0x217346));
-        buttonEnterData.setBounds(200, 250, 200, 190);
+        buttonEnterData.setBounds(140, 220, 200, 190);
         buttonEnterData.setFocusable(false);
         buttonEnterData.setForeground(Color.WHITE);
         buttonEnterData.setFont(new Font("Arial Black", Font.PLAIN, 32));
@@ -58,14 +62,14 @@ public class MainFrame extends JFrame implements ActionListener {
         buttonEnterData.addMouseListener(new ButtonMouseListener(buttonEnterData, labelButtonEffectEnterData));
 
         JLabel labelButtonEffectOpenFile = new JLabel();
-        labelButtonEffectOpenFile.setBounds(520, 250, 200, 190);
+        labelButtonEffectOpenFile.setBounds(460, 220, 200, 190);
         labelButtonEffectOpenFile.setBackground(new Color(0x363636));
         labelButtonEffectOpenFile.setOpaque(false);
 
         //Open File Button
         buttonOpenFile = new JButton("<html><div style='text-align: center;'>Open<br>File</div></html>");
         buttonOpenFile.setBackground(new Color(0x217346));
-        buttonOpenFile.setBounds(520, 250, 200, 190);
+        buttonOpenFile.setBounds(460, 220, 200, 190);
         buttonOpenFile.setFocusable(false);
         buttonOpenFile.setForeground(Color.WHITE);
         buttonOpenFile.setFont(new Font("Arial Black", Font.PLAIN, 32));
@@ -90,7 +94,7 @@ public class MainFrame extends JFrame implements ActionListener {
         this.setLayout(null);
         this.setTitle("Chart");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(920, 920);
+        this.setSize(816, 800);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setResizable(false);

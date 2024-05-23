@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 public class EnterDataFrame extends JFrame implements ActionListener {
     JButton buttonBack;
@@ -28,51 +29,63 @@ public class EnterDataFrame extends JFrame implements ActionListener {
 
     JComboBox comboBoxChartType;
 
-    EnterDataFrame(){
+    public EnterDataFrame(){
         JPanel panelMenu = new JPanel();
         panelMenu.setBackground(new Color(0x363636));
-        panelMenu.setBounds(0, 50, 920, 60);
+        panelMenu.setBounds(0, 40, 800, 50);
         panelMenu.setLayout(null);
 
         CirclePanel panelCircle = new CirclePanel();
-        panelCircle.setBounds(400, 30, 100, 100);
+        panelCircle.setBounds(360, 25, 80, 80);
 
-        ImageIcon lineGreen = new ImageIcon("src/main/java/images/greenLine.png");
+        ImageIcon lineGreen = null;
+        try {
+            URL lineGreenURL = getClass().getResource("/greenLine.png");
+            if (lineGreenURL != null) {
+                lineGreen = new ImageIcon(lineGreenURL);
+            } else {
+                System.err.println("Resource not found: /greenLine.png");
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         JLabel labelMenuLine1 = new JLabel();
         labelMenuLine1.setIcon(lineGreen);
-        labelMenuLine1.setBounds(8, 65, 60, 30);
+        labelMenuLine1.setBounds(9, 55, 60, 20);
 
         JLabel labelMenuLine2 = new JLabel();
         labelMenuLine2.setIcon(lineGreen);
-        labelMenuLine2.setBounds(195, 65, 60, 30);
+        labelMenuLine2.setBounds(171, 55, 60, 20);
 
         JLabel labelMenuLine3 = new JLabel();
         labelMenuLine3.setIcon(lineGreen);
-        labelMenuLine3.setBounds(518, 65, 60, 30);
+        labelMenuLine3.setBounds(333, 55, 60, 20);
 
         JLabel labelMenuLine4 = new JLabel();
         labelMenuLine4.setIcon(lineGreen);
-        labelMenuLine4.setBounds(705, 65, 60, 30);
+        labelMenuLine4.setBounds(467, 55, 60, 20);
 
         JLabel labelMenuLine5 = new JLabel();
         labelMenuLine5.setIcon(lineGreen);
-        labelMenuLine5.setBounds(382, 65, 60, 30);
+        labelMenuLine5.setBounds(619, 55, 60, 20);
 
         JLabel labelMenuLine6 = new JLabel();
         labelMenuLine6.setIcon(lineGreen);
-        labelMenuLine6.setBounds(892, 65, 60, 30);
+        labelMenuLine6.setBounds(781, 55, 60, 20);
 
         JLabel labelButtonEffectBack = new JLabel();
-        labelButtonEffectBack.setBounds(26, 60, 151, 40);
+        labelButtonEffectBack.setBounds(27, 50, 126, 30);
         labelButtonEffectBack.setBackground(new Color(0x0E5C2F));
         labelButtonEffectBack.setOpaque(false);
 
         buttonBack = new JButton("Back");
-        buttonBack.setBounds(26, 60, 151, 40);
+        buttonBack.setBounds(27, 50, 126, 30);
         buttonBack.setFocusable(false);
         buttonBack.setForeground(Color.WHITE);
-        buttonBack.setFont(new Font("Arial Black", Font.PLAIN, 20));
+        buttonBack.setFont(new Font("Arial Black", Font.PLAIN, 14));
         buttonBack.addActionListener(this);
         buttonBack.setBorderPainted(false);
         buttonBack.setBackground(new Color(0x262626));
@@ -80,15 +93,15 @@ public class EnterDataFrame extends JFrame implements ActionListener {
         buttonBack.setContentAreaFilled(false);
 
         JLabel labelButtonEffectOpenFile = new JLabel();
-        labelButtonEffectOpenFile.setBounds(213, 60, 151, 40);
+        labelButtonEffectOpenFile.setBounds(189, 50, 126, 30);
         labelButtonEffectOpenFile.setBackground(new Color(0x0E5C2F));
         labelButtonEffectOpenFile.setOpaque(false);
 
         buttonOpenFile = new JButton("Open File");
-        buttonOpenFile.setBounds(213, 60, 151, 40);
+        buttonOpenFile.setBounds(189, 50, 126, 30);
         buttonOpenFile.setFocusable(false);
         buttonOpenFile.setForeground(Color.WHITE);
-        buttonOpenFile.setFont(new Font("Arial Black", Font.PLAIN, 20));
+        buttonOpenFile.setFont(new Font("Arial Black", Font.PLAIN, 14));
         buttonOpenFile.addActionListener(this);
         buttonOpenFile.setBorderPainted(false);
         buttonOpenFile.setBackground(new Color(0x262626));
@@ -96,15 +109,15 @@ public class EnterDataFrame extends JFrame implements ActionListener {
         buttonOpenFile.setContentAreaFilled(false);
 
         JLabel labelButtonEffectClear = new JLabel();
-        labelButtonEffectClear.setBounds(536, 60, 151, 40);
+        labelButtonEffectClear.setBounds(475, 50, 126, 30);
         labelButtonEffectClear.setBackground(new Color(0x0E5C2F));
         labelButtonEffectClear.setOpaque(false);
 
         buttonClear = new JButton("Clear");
-        buttonClear.setBounds(536, 60, 151, 40);
+        buttonClear.setBounds(475, 50, 126, 30);
         buttonClear.setFocusable(false);
         buttonClear.setForeground(Color.WHITE);
-        buttonClear.setFont(new Font("Arial Black", Font.PLAIN, 20));
+        buttonClear.setFont(new Font("Arial Black", Font.PLAIN, 14));
         buttonClear.addActionListener(this);
         buttonClear.setBorderPainted(false);
         buttonClear.setBackground(new Color(0x262626));
@@ -112,33 +125,41 @@ public class EnterDataFrame extends JFrame implements ActionListener {
         buttonClear.setContentAreaFilled(false);
 
         JLabel labelButtonEffect = new JLabel();
-        labelButtonEffect.setBounds(723, 60, 151, 40);
+        labelButtonEffect.setBounds(637, 50, 129, 30);
         labelButtonEffect.setBackground(new Color(0x0E5C2F));
         labelButtonEffect.setOpaque(false);
 
         button = new JButton("Button");
-        button.setBounds(723, 60, 151, 40);
+        button.setBounds(637, 50, 126, 30);
         button.setFocusable(false);
         button.setForeground(Color.WHITE);
-        button.setFont(new Font("Arial Black", Font.PLAIN, 20));
+        button.setFont(new Font("Arial Black", Font.PLAIN, 14));
         button.addActionListener(this);
         button.setBorderPainted(false);
         button.setBackground(new Color(0x262626));
         button.addMouseListener(new ButtonMouseListenerMenu(button, labelButtonEffect));
         button.setContentAreaFilled(false);
+        URL labelTextfieldURL = getClass().getResource("/greenChartTitle.png");
+        ImageIcon labelTextfield = null;
+        if (labelTextfieldURL == null) {
+            System.err.println("Resource not found: /textFieldName.png");
+            labelTextfield = new ImageIcon("src/main/resources/textFieldName.png");
+        }
+        else {
+            labelTextfield = new ImageIcon(labelTextfieldURL);
+        }
 
-        ImageIcon labelTextfield = new ImageIcon("src/main/java/images/textFieldName.png");
 
         JLabel labelTextfieldChartTitle = new JLabel();
         labelTextfieldChartTitle.setIcon(labelTextfield);
-        labelTextfieldChartTitle.setBounds(330, 146, 160, 34);
+        labelTextfieldChartTitle.setBounds(270, 120, 160, 34);
         labelTextfieldChartTitle.setText("Chart Title");
         labelTextfieldChartTitle.setFont(new Font("Arial Black", Font.PLAIN, 12));
         labelTextfieldChartTitle.setForeground(Color.WHITE);
         labelTextfieldChartTitle.setHorizontalTextPosition(JLabel.CENTER);
 
         textFieldChartTitle = new JTextField("Chart Title");
-        textFieldChartTitle.setBounds(310  , 170, 300, 40);
+        textFieldChartTitle.setBounds(250  , 144, 300, 40);
         textFieldChartTitle.setBackground(new Color(0x363636));
         textFieldChartTitle.setForeground(Color.WHITE);
         textFieldChartTitle.setFont(new Font("Arial Black", Font.PLAIN, 16));
@@ -147,14 +168,14 @@ public class EnterDataFrame extends JFrame implements ActionListener {
 
         JLabel labelTextfieldRow = new JLabel();
         labelTextfieldRow.setIcon(labelTextfield);
-        labelTextfieldRow.setBounds(90, 226, 160, 34);
+        labelTextfieldRow.setBounds(80, 200, 160, 34);
         labelTextfieldRow.setText("Number of Rows");
         labelTextfieldRow.setFont(new Font("Arial Black", Font.PLAIN, 12));
         labelTextfieldRow.setForeground(Color.WHITE);
         labelTextfieldRow.setHorizontalTextPosition(JLabel.CENTER);
 
         textFieldNumberOfRows = new JTextField("Number of Rows");
-        textFieldNumberOfRows.setBounds(70, 250, 300, 40);
+        textFieldNumberOfRows.setBounds(60, 224, 300, 40);
         textFieldNumberOfRows.setBackground(new Color(0x363636));
         textFieldNumberOfRows.setForeground(Color.WHITE);
         textFieldNumberOfRows.setFont(new Font("Arial Black", Font.PLAIN, 16));
@@ -163,30 +184,32 @@ public class EnterDataFrame extends JFrame implements ActionListener {
 
         JLabel labelTextfieldColumn = new JLabel();
         labelTextfieldColumn.setIcon(labelTextfield);
-        labelTextfieldColumn.setBounds(460, 226, 160, 34);
+        labelTextfieldColumn.setBounds(395, 200, 160, 34);
         labelTextfieldColumn.setText("Number of Columns");
         labelTextfieldColumn.setFont(new Font("Arial Black", Font.PLAIN, 12));
         labelTextfieldColumn.setForeground(Color.WHITE);
         labelTextfieldColumn.setHorizontalTextPosition(JLabel.CENTER);
 
         textFieldNumberOfColumns = new JTextField("Number of Columns");
-        textFieldNumberOfColumns.setBounds(440, 250, 300, 40);
+        textFieldNumberOfColumns.setBounds(375, 224, 300, 40);
         textFieldNumberOfColumns.setBackground(new Color(0x363636));
         textFieldNumberOfColumns.setForeground(Color.WHITE);
         textFieldNumberOfColumns.setFont(new Font("Arial Black", Font.PLAIN, 16));
         textFieldNumberOfColumns.setCaretColor(new Color(0xC9C9C9));
         textFieldNumberOfColumns.setHorizontalAlignment(JTextField.CENTER);
 
-        ImageIcon tableIcon = new ImageIcon("src/main/java/images/tableIconSmall.png");
+        URL tableIconURL = getClass().getResource("/tableIconSmall.png");
+        if (tableIconURL == null) throw new AssertionError();
+        ImageIcon tableIcon = new ImageIcon(tableIconURL);
 
         JLabel labelButtonEffectGenerateTable = new JLabel();
-        labelButtonEffectGenerateTable.setBounds(810, 250, 40, 40);
+        labelButtonEffectGenerateTable.setBounds(685, 224, 40, 40);
         labelButtonEffectGenerateTable.setBackground(new Color(0x363636));
         labelButtonEffectGenerateTable.setOpaque(false);
 
         buttonGenerateTable = new JButton();
         buttonGenerateTable.setBackground(new Color(0x217346));
-        buttonGenerateTable.setBounds(810, 250, 40, 40);
+        buttonGenerateTable.setBounds(685, 224, 40, 40);
         buttonGenerateTable.setFocusable(false);
         buttonGenerateTable.setIcon(tableIcon);
         buttonGenerateTable.addActionListener(this);
@@ -215,15 +238,14 @@ public class EnterDataFrame extends JFrame implements ActionListener {
         CenterTextCellRenderer centerRenderer = new CenterTextCellRenderer();
         table.setDefaultRenderer(Object.class, centerRenderer);
 
-
         scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(70, 320, 780, 450);
+        scrollPane.setBounds(60, 296, 665, 370);
         scrollPane.setBackground(new Color(0x363636));
         scrollPane.getViewport().setBackground(new Color(0x363636));
 
         labelException = new JLabel();
         labelException.setVisible(false);
-        labelException.setBounds(0, 290, 920, 30);
+        labelException.setBounds(0, 265, 800, 30);
         labelException.setHorizontalAlignment(SwingConstants.CENTER);
         labelException.setVerticalAlignment(SwingConstants.CENTER);
         labelException.setFont(new Font("Arial Black", Font.PLAIN, 16));
@@ -231,7 +253,7 @@ public class EnterDataFrame extends JFrame implements ActionListener {
 
         String[] chartTypes = {"Line Chart", "Bar Chart", "Scatter Chart", "Pie Chart"};
         comboBoxChartType = new JComboBox(chartTypes);
-        comboBoxChartType.setBounds(70, 800, 300, 40);
+        comboBoxChartType.setBounds(60, 690, 300, 40);
         comboBoxChartType.addActionListener(this);
         comboBoxChartType.setFont(new Font("Arial Black", Font.PLAIN, 16));
         comboBoxChartType.setBackground(new Color(0x217346));
@@ -242,13 +264,13 @@ public class EnterDataFrame extends JFrame implements ActionListener {
         comboBoxChartType.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel labelButtonEffectCreate = new JLabel();
-        labelButtonEffectCreate.setBounds(550, 800, 300, 40);
+        labelButtonEffectCreate.setBounds(425, 690, 300, 40);
         labelButtonEffectCreate.setBackground(new Color(0x363636));
         labelButtonEffectCreate.setOpaque(false);
 
         buttonCreate = new JButton("<html><div style='text-align: center;'>Create</div></html>");
         buttonCreate.setBackground(new Color(0x217346));
-        buttonCreate.setBounds(550, 800, 300, 40);
+        buttonCreate.setBounds(425, 690, 300, 40);
         buttonCreate.setFocusable(false);
         buttonCreate.setForeground(Color.WHITE);
         buttonCreate.setFont(new Font("Arial Black", Font.PLAIN, 16));
@@ -302,7 +324,7 @@ public class EnterDataFrame extends JFrame implements ActionListener {
         this.setLayout(null);
         this.setTitle("Enter Data Frame");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(920, 920);
+        this.setSize(816, 800);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setResizable(false);
@@ -321,14 +343,7 @@ public class EnterDataFrame extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == buttonClear){
-            textFieldChartTitle.setText("Chart Title");
-            textFieldNumberOfRows.setText("Number of Rows");
-            textFieldNumberOfColumns.setText("Number of Columns");
-
-            tableModel.setColumnCount(0);
-            tableModel.setRowCount(0);
-
-            comboBoxChartType.setSelectedIndex(0);
+            clear();
         }
 
         if (e.getSource() == buttonGenerateTable){
@@ -343,19 +358,38 @@ public class EnterDataFrame extends JFrame implements ActionListener {
             }
 
             catch (Exception exception){
-                labelException.setText("Error: Please input only integer values in the text fields.");
+                labelException.setText("Please input only integer values in the text fields.");
                 labelException.setVisible(true);
             }
         }
 
         if (e.getSource() == buttonCreate){
-            this.dispose();
-            ChartFrame chartFrame = new ChartFrame();
+            if(table.getColumnCount() == 0){
+                labelException.setText("Please generate the table first.");
+                labelException.setVisible(true);
+            }
 
-            for (int i = 0; i < table.getColumnCount(); i++){
-                System.out.println(table.getColumnName(i));
+            else if (comboBoxChartType.getSelectedIndex() == 0){
+                labelException.setText("Please select a chart type first.");
+                labelException.setVisible(true);
+            }
+
+            else {
+                this.dispose();
+                ChartFrame chartFrame = new ChartFrame();
             }
         }
+    }
+
+    private void clear(){
+        textFieldChartTitle.setText("Chart Title");
+        textFieldNumberOfRows.setText("Number of Rows");
+        textFieldNumberOfColumns.setText("Number of Columns");
+
+        tableModel.setColumnCount(0);
+        tableModel.setRowCount(0);
+
+        comboBoxChartType.setSelectedIndex(0);
     }
 }
 
