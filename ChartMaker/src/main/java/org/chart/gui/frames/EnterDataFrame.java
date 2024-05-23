@@ -4,6 +4,7 @@ import org.chart.gui.customizations.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,6 +29,9 @@ public class EnterDataFrame extends JFrame implements ActionListener {
     JLabel labelException;
 
     JComboBox comboBoxChartType;
+
+    String[] headers;
+    String[][] data;
 
     public EnterDataFrame(){
         JPanel panelMenu = new JPanel();
@@ -364,6 +368,13 @@ public class EnterDataFrame extends JFrame implements ActionListener {
         }
 
         if (e.getSource() == buttonCreate){
+            TableColumnModel columnModel = table.getColumnModel();
+            headers = new String[columnModel.getColumnCount()];
+            for (int i = 0; i < columnModel.getColumnCount(); i++) {
+                headers[i] = columnModel.getColumn(i).getHeaderValue().toString();
+            }
+
+
             if(table.getColumnCount() == 0){
                 labelException.setText("Please generate the table first.");
                 labelException.setVisible(true);
@@ -375,8 +386,27 @@ public class EnterDataFrame extends JFrame implements ActionListener {
             }
 
             else {
+//                headers = new String[table.getColumnCount()];
+//                for (int i = 0; i < table.getColumnCount(); i++) {
+//                    headers[i] = table.getColumnName(i);
+//                }
+
+                // Collect data
+                data = new String[table.getRowCount()][table.getColumnCount()];
+                for (int row = 0; row < table.getRowCount(); row++) {
+                    for (int col = 0; col < table.getColumnCount(); col++) {
+                        data[row][col] = String.valueOf(table.getValueAt(row, col));
+                    }
+                }
+
                 this.dispose();
-                ChartFrame chartFrame = new ChartFrame();
+                ChartFrame chartFrame = new ChartFrame(
+                        String.valueOf(comboBoxChartType.getSelectedIndex()),
+                        headers,
+                        data,
+                        textFieldChartTitle.getText(),
+                        "X-Axis",
+                        "Y-Axis");
             }
         }
     }
