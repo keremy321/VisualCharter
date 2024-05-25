@@ -40,6 +40,9 @@ public class OpenFileFrame extends JFrame implements ActionListener {
 
     String filePath;
 
+    String[] headers;
+    String[][] data;
+
     public OpenFileFrame(){
         JPanel panelMenu = new JPanel();
         panelMenu.setBackground(new Color(0x363636));
@@ -388,8 +391,8 @@ public class OpenFileFrame extends JFrame implements ActionListener {
                         rowsCount = excelReader.getRowCount();
                         columnsCount = excelReader.getColumnCount();
 
-                        String[] headers = excelReader.headersToArray();
-                        String[][] data = excelReader.dataToArray();
+                        headers = excelReader.headersToArray();
+                        data = excelReader.dataToArray();
 
                         tableModel.setColumnIdentifiers(headers);
 
@@ -411,8 +414,8 @@ public class OpenFileFrame extends JFrame implements ActionListener {
                         rowsCount = csvReader.getRowCount();
                         columnsCount = csvReader.getColumnCount();
 
-                        String[] headers = csvReader.getHeader();
-                        String[][] data = csvReader.getData();
+                        headers = csvReader.getHeader();
+                        data = csvReader.getData();
 
                         tableModel.setColumnIdentifiers(headers);
 
@@ -451,7 +454,13 @@ public class OpenFileFrame extends JFrame implements ActionListener {
 
             else {
                 this.dispose();
-                ChartFrame chartFrame = new ChartFrame();
+                ChartFrame chartFrame = new ChartFrame(
+                        String.valueOf(comboBoxChartType.getSelectedIndex()),
+                        headers,
+                        data,
+                        textFieldChartTitle.getText(),
+                        "X-Axis",
+                        "Y-Axis");
             }
         }
     }

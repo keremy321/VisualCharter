@@ -14,6 +14,13 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 
 public class ChartFrame extends JFrame implements ActionListener {
+    String choose;
+    String[] headers;
+    String[][] data;
+    String chartTitle;
+    String xAxisLabel;
+    String yAxisLabel;
+
     JButton buttonBack;
     JButton buttonEnterData;
     JButton buttonClear;
@@ -23,7 +30,7 @@ public class ChartFrame extends JFrame implements ActionListener {
 
     JButton buttonSave;
 
-    public ChartFrame(){
+    public ChartFrame(String choose, String[] headers, String[][] data, String chartTitle, String xAxisLabel, String yAxisLabel){
         JPanel panelMenu = new JPanel();
         panelMenu.setBackground(new Color(0x363636));
         panelMenu.setBounds(0, 40, 800, 50);
@@ -229,11 +236,5 @@ public class ChartFrame extends JFrame implements ActionListener {
 
             }
         }
-    }
-
-    public static BufferedImage getChartScreenShot(JScrollPane component){
-        BufferedImage image = new BufferedImage(component.getWidth(), component.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        component.paint(image.getGraphics());
-        return image;
     }
 }
