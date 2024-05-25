@@ -15,6 +15,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 
 public class OpenFileFrame extends JFrame implements ActionListener {
@@ -454,13 +455,17 @@ public class OpenFileFrame extends JFrame implements ActionListener {
 
             else {
                 this.dispose();
-                ChartFrame chartFrame = new ChartFrame(
-                        String.valueOf(comboBoxChartType.getSelectedIndex()),
-                        headers,
-                        data,
-                        textFieldChartTitle.getText(),
-                        "X-Axis",
-                        "Y-Axis");
+                try {
+                    ChartFrame chartFrame = new ChartFrame(
+                            String.valueOf(comboBoxChartType.getSelectedItem()),
+                            headers,
+                            data,
+                            textFieldChartTitle.getText(),
+                            "X-Axis",
+                            "Y-Axis");
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
     }

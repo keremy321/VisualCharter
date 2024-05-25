@@ -4,20 +4,21 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.title.TextTitle;
+import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import java.io.IOException;
+import java.awt.*;
 
-public class ScatterChartMaker1 {
-    private String choose;
+public class ScatterChartMaker {
     private static String[] columnHeaders;
     private static String[][] rowData;
     private static String chartTitle;
     private static String xAxisLabel;
     private static String yAxisLabel;
-    public ScatterChartMaker1(String choose, String[] headers, String[][] data, String chartTitle, String xAxisLabel, String yAxisLabel) throws IOException {
-        this.choose = choose;
+    public ScatterChartMaker(String[] headers, String[][] data, String chartTitle, String xAxisLabel, String yAxisLabel) {
         this.columnHeaders = headers;
         this.rowData = data;
         this.chartTitle = chartTitle;
@@ -46,6 +47,36 @@ public class ScatterChartMaker1 {
                 scatterDataset,
                 PlotOrientation.VERTICAL,
                 true, true, false);
+
+        // Set background color
+        chart.setBackgroundPaint(new Color(0x363636));
+
+        // Set chart title
+        TextTitle title = chart.getTitle();
+        title.setPaint(Color.WHITE);
+        title.setPadding(new RectangleInsets(10, 0, 0, 0));
+
+        // Customize plot
+        XYPlot plot = chart.getXYPlot();
+        plot.setBackgroundPaint(new Color(0x363636));
+
+        // Customize axes
+        plot.getDomainAxis().setLabelPaint(Color.WHITE);
+        plot.getRangeAxis().setLabelPaint(Color.WHITE);
+        plot.getDomainAxis().setTickLabelPaint(Color.WHITE);
+        plot.getRangeAxis().setTickLabelPaint(Color.WHITE);
+        plot.getDomainAxis().setAxisLinePaint(Color.WHITE);
+        plot.getRangeAxis().setAxisLinePaint(Color.WHITE);
+
+        // Customize legend
+        chart.getLegend().setBackgroundPaint(new Color(0x363636));
+        chart.getLegend().setItemPaint(Color.WHITE);
+
+        // Customize series colors (optional)
+        plot.getRenderer().setSeriesPaint(0, new Color(0x2D7C3C));
+        plot.getRenderer().setSeriesPaint(1, new Color(0xD24738));
+        plot.getRenderer().setSeriesPaint(2, new Color(0x5EADD6));
+
 
         return new ChartPanel(chart);
     }

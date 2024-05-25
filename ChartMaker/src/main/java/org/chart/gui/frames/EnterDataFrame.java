@@ -8,6 +8,7 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.URL;
 
 public class EnterDataFrame extends JFrame implements ActionListener {
@@ -400,13 +401,17 @@ public class EnterDataFrame extends JFrame implements ActionListener {
                 }
 
                 this.dispose();
-                ChartFrame chartFrame = new ChartFrame(
-                        String.valueOf(comboBoxChartType.getSelectedIndex()),
-                        headers,
-                        data,
-                        textFieldChartTitle.getText(),
-                        "X-Axis",
-                        "Y-Axis");
+                try {
+                    ChartFrame chartFrame = new ChartFrame(
+                            String.valueOf(comboBoxChartType.getSelectedItem()),
+                            headers,
+                            data,
+                            textFieldChartTitle.getText(),
+                            "X-Axis",
+                            "Y-Axis");
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
     }

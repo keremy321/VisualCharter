@@ -1,8 +1,13 @@
 package org.chart.gui.frames;
 
+import org.chart.chartCreator.BarChartMaker;
+import org.chart.chartCreator.LineChartMaker;
+import org.chart.chartCreator.PieChartMaker;
+import org.chart.chartCreator.ScatterChartMaker;
 import org.chart.gui.customizations.ButtonMouseListener;
 import org.chart.gui.customizations.ButtonMouseListenerMenu;
 import org.chart.gui.customizations.CirclePanel;
+import org.jfree.chart.ChartPanel;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -10,7 +15,7 @@ import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.URL;
 
 public class ChartFrame extends JFrame implements ActionListener {
@@ -30,7 +35,14 @@ public class ChartFrame extends JFrame implements ActionListener {
 
     JButton buttonSave;
 
-    public ChartFrame(String choose, String[] headers, String[][] data, String chartTitle, String xAxisLabel, String yAxisLabel){
+    public ChartFrame(String choose, String[] headers, String[][] data, String chartTitle, String xAxisLabel, String yAxisLabel) throws IOException {
+        this.choose = choose;
+        this.headers = headers;
+        this.data = data;
+        this.chartTitle = chartTitle;
+        this.xAxisLabel = xAxisLabel;
+        this.yAxisLabel = yAxisLabel;
+
         JPanel panelMenu = new JPanel();
         panelMenu.setBackground(new Color(0x363636));
         panelMenu.setBounds(0, 40, 800, 50);
@@ -141,6 +153,9 @@ public class ChartFrame extends JFrame implements ActionListener {
         button.addMouseListener(new ButtonMouseListenerMenu(button, labelButtonEffect));
         button.setContentAreaFilled(false);
 
+        ChartPanel chartPanel = getPanel();
+        chartPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+
         scrollPane = new JScrollPane();
         scrollPane.setBounds(50, 120, 700, 400);
         scrollPane.setBackground(new Color(0x363636));
@@ -162,7 +177,6 @@ public class ChartFrame extends JFrame implements ActionListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         buttonSave = new JButton();
         buttonSave.setBackground(new Color(0x217346));
@@ -190,7 +204,7 @@ public class ChartFrame extends JFrame implements ActionListener {
         layeredPane.add(labelButtonEffectClear, Integer.valueOf(1));
         layeredPane.add(labelButtonEffect, Integer.valueOf(1));
 
-        layeredPane.add(scrollPane);
+        layeredPane.add(chartPanel, Integer.valueOf(1));
 
         layeredPane.add(buttonSave, Integer.valueOf(1));
         layeredPane.add(labelButtonEffectSave, Integer.valueOf(1));
@@ -236,5 +250,33 @@ public class ChartFrame extends JFrame implements ActionListener {
 
             }
         }
+    }
+
+    public ChartPanel getPanel() throws IOException {
+        if (choose.equals("Line Chart")){
+            LineChartMaker chartMaker = new LineChartMaker(headers, data, chartTitle, xAxisLabel, yAxisLabel);
+            ChartPanel chartPanel = chartMaker.getPanel();
+            chartPanel.setBounds(50, 120, 700, 400);
+            return chartPanel;
+        }
+        else if (choose.equals("Pie Chart")){
+            PieChartMaker chartMaker = new PieChartMaker(headers, data, chartTitle, xAxisLabel, yAxisLabel);
+            ChartPanel chartPanel = chartMaker.getPanel();
+            chartPanel.setBounds(50, 120, 700, 400);
+            return chartPanel;
+        }
+        else if (choose.equals("Scatter Chart")){
+            ScatterChartMaker chartMaker = new ScatterChartMaker(headers, data, chartTitle, xAxisLabel, yAxisLabel);
+            ChartPanel chartPanel = chartMaker.getPanel();
+            chartPanel.setBounds(50, 120, 700, 400);
+            return chartPanel;
+        }
+        else if (choose.equals("Bar Chart")){
+            BarChartMaker chartMaker = new BarChartMaker(headers, data, chartTitle, xAxisLabel, yAxisLabel);
+            ChartPanel chartPanel = chartMaker.getPanel();
+            chartPanel.setBounds(50, 120, 700, 400);
+            return chartPanel;
+        }
+        return null;
     }
 }

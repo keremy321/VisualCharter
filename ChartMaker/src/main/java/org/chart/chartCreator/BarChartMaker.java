@@ -7,21 +7,21 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
+import org.jfree.chart.title.TextTitle;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.VerticalAlignment;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import java.awt.*;
-import java.io.IOException;
 
-public class BarChartMaker1 {
-    private String choose;
+public class BarChartMaker {
     private static String[] columnHeaders;
     private static String[][] rowData;
     private static String chartTitle;
     private static String xAxisLabel;
     private static String yAxisLabel;
 
-    public BarChartMaker1(String choose, String[] headers, String[][] data, String chartTitle, String xAxisLabel, String yAxisLabel) throws IOException {
-        this.choose = choose;
+    public BarChartMaker(String[] headers, String[][] data, String chartTitle, String xAxisLabel, String yAxisLabel) {
         this.columnHeaders = headers;
         this.rowData = data;
         this.chartTitle = chartTitle;
@@ -49,19 +49,40 @@ public class BarChartMaker1 {
                 true, true, false
         );
 
-        CategoryPlot plot = chart.getCategoryPlot();
-        plot.setBackgroundPaint(Color.WHITE);
-        plot.setDomainGridlinePaint(Color.WHITE);
+        chart.setBackgroundPaint(new Color(0x363636));
+
+        TextTitle title = chart.getTitle();
+        title.setPaint(Color.WHITE);
+        title.setPadding(new RectangleInsets(10, 0, 0, 0));
+
+        CategoryPlot plot = (CategoryPlot) chart.getPlot();
+        plot.setBackgroundPaint(new Color(0x363636));
         plot.setRangeGridlinePaint(Color.WHITE);
+        plot.setDomainGridlinePaint(Color.WHITE);
+        plot.setOutlinePaint(Color.WHITE);
         plot.setOutlineVisible(false);
+
         BarRenderer renderer = (BarRenderer) plot.getRenderer();
         renderer.setBarPainter(new StandardBarPainter());
         renderer.setGradientPaintTransformer(null);
 
+        plot.getDomainAxis().setTickLabelPaint(Color.WHITE); // X-axis
+        plot.getRangeAxis().setTickLabelPaint(Color.WHITE); // Y-axis
+
+        plot.getDomainAxis().setAxisLinePaint(Color.WHITE); // X-axis border
+        plot.getRangeAxis().setAxisLinePaint(Color.WHITE); // Y-axis border
+
+        plot.getDomainAxis().setLabelPaint(Color.WHITE); // X-axis title
+        plot.getRangeAxis().setLabelPaint(Color.WHITE); // Y-axis title
+
+        chart.getLegend().setBackgroundPaint(new Color(0x363636));
+        chart.getLegend().setItemPaint(Color.WHITE);
+        chart.getLegend().setVerticalAlignment(VerticalAlignment.CENTER);
+
         Paint[] colors = {
-                new Color(0, 172, 178),      // blue
-                new Color(239, 70, 55),      // red
-                new Color(85, 177, 69)       // green
+                new Color(0x2D7C3C),
+                new Color(0xD24738),
+                new Color(0x5EADD6)
         };
 
         // Change the default colors
