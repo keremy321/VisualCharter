@@ -1,5 +1,6 @@
 package org.chart.gui.frames;
 
+import org.apache.commons.compress.harmony.pack200.NewAttributeBands;
 import org.chart.chartCreator.BarChartMaker;
 import org.chart.chartCreator.LineChartMaker;
 import org.chart.chartCreator.PieChartMaker;
@@ -8,6 +9,8 @@ import org.chart.gui.customizations.ButtonMouseListener;
 import org.chart.gui.customizations.ButtonMouseListenerMenu;
 import org.chart.gui.customizations.CirclePanel;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtils;
+import org.jfree.chart.JFreeChart;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -15,6 +18,7 @@ import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -28,10 +32,13 @@ public class ChartFrame extends JFrame implements ActionListener {
 
     JButton buttonBack;
     JButton buttonEnterData;
-    JButton buttonClear;
+    JButton buttonOpenFile;
     JButton button;
 
-    JScrollPane scrollPane;
+    JLabel labelException;
+
+    JTextField textFieldSaveWidth;
+    JTextField textFieldSaveHeight;
 
     JButton buttonSave;
 
@@ -67,7 +74,7 @@ public class ChartFrame extends JFrame implements ActionListener {
         
         JLabel labelMenuLine1 = new JLabel();
         labelMenuLine1.setIcon(lineGreen);
-        labelMenuLine1.setBounds(17, 55, 60, 20);
+        labelMenuLine1.setBounds(16, 55, 60, 20);
 
         JLabel labelMenuLine2 = new JLabel();
         labelMenuLine2.setIcon(lineGreen);
@@ -75,11 +82,11 @@ public class ChartFrame extends JFrame implements ActionListener {
 
         JLabel labelMenuLine3 = new JLabel();
         labelMenuLine3.setIcon(lineGreen);
-        labelMenuLine3.setBounds(343, 55, 60, 20);
+        labelMenuLine3.setBounds(344, 55, 60, 20);
 
         JLabel labelMenuLine4 = new JLabel();
         labelMenuLine4.setIcon(lineGreen);
-        labelMenuLine4.setBounds(457, 55, 60, 20);
+        labelMenuLine4.setBounds(456, 55, 60, 20);
 
         JLabel labelMenuLine5 = new JLabel();
         labelMenuLine5.setIcon(lineGreen);
@@ -87,15 +94,15 @@ public class ChartFrame extends JFrame implements ActionListener {
 
         JLabel labelMenuLine6 = new JLabel();
         labelMenuLine6.setIcon(lineGreen);
-        labelMenuLine6.setBounds(783, 55, 60, 20);
+        labelMenuLine6.setBounds(784, 55, 60, 20);
 
         JLabel labelButtonEffectBack = new JLabel();
-        labelButtonEffectBack.setBounds(34, 50, 129, 30);
+        labelButtonEffectBack.setBounds(32, 50, 129, 30);
         labelButtonEffectBack.setBackground(new Color(0x0E5C2F));
         labelButtonEffectBack.setOpaque(false);
 
         buttonBack = new JButton("Back");
-        buttonBack.setBounds(34, 50, 129, 30);
+        buttonBack.setBounds(32, 50, 129, 30);
         buttonBack.setFocusable(false);
         buttonBack.setForeground(Color.WHITE);
         buttonBack.setFont(new Font("Arial Black", Font.PLAIN, 14));
@@ -106,12 +113,12 @@ public class ChartFrame extends JFrame implements ActionListener {
         buttonBack.setContentAreaFilled(false);
 
         JLabel labelButtonEffectEnterData = new JLabel();
-        labelButtonEffectEnterData.setBounds(197, 50, 129, 30);
+        labelButtonEffectEnterData.setBounds(196, 50, 129, 30);
         labelButtonEffectEnterData.setBackground(new Color(0x0E5C2F));
         labelButtonEffectEnterData.setOpaque(false);
 
         buttonEnterData = new JButton("Enter Data");
-        buttonEnterData.setBounds(197, 50, 129, 30);
+        buttonEnterData.setBounds(196, 50, 129, 30);
         buttonEnterData.setFocusable(false);
         buttonEnterData.setForeground(Color.WHITE);
         buttonEnterData.setFont(new Font("Arial Black", Font.PLAIN, 14));
@@ -122,28 +129,28 @@ public class ChartFrame extends JFrame implements ActionListener {
         buttonEnterData.setContentAreaFilled(false);
 
         JLabel labelButtonEffectClear = new JLabel();
-        labelButtonEffectClear.setBounds(474, 50, 129, 30);
+        labelButtonEffectClear.setBounds(472, 50, 129, 30);
         labelButtonEffectClear.setBackground(new Color(0x0E5C2F));
         labelButtonEffectClear.setOpaque(false);
 
-        buttonClear = new JButton("Clear");
-        buttonClear.setBounds(474, 50, 129, 30);
-        buttonClear.setFocusable(false);
-        buttonClear.setForeground(Color.WHITE);
-        buttonClear.setFont(new Font("Arial Black", Font.PLAIN, 14));
-        buttonClear.addActionListener(this);
-        buttonClear.setBorderPainted(false);
-        buttonClear.setBackground(new Color(0x262626));
-        buttonClear.addMouseListener(new ButtonMouseListenerMenu(buttonClear, labelButtonEffectClear));
-        buttonClear.setContentAreaFilled(false);
+        buttonOpenFile = new JButton("Open File");
+        buttonOpenFile.setBounds(472, 50, 129, 30);
+        buttonOpenFile.setFocusable(false);
+        buttonOpenFile.setForeground(Color.WHITE);
+        buttonOpenFile.setFont(new Font("Arial Black", Font.PLAIN, 14));
+        buttonOpenFile.addActionListener(this);
+        buttonOpenFile.setBorderPainted(false);
+        buttonOpenFile.setBackground(new Color(0x262626));
+        buttonOpenFile.addMouseListener(new ButtonMouseListenerMenu(buttonOpenFile, labelButtonEffectClear));
+        buttonOpenFile.setContentAreaFilled(false);
 
         JLabel labelButtonEffect = new JLabel();
-        labelButtonEffect.setBounds(637, 50, 129, 30);
+        labelButtonEffect.setBounds(636, 50, 129, 30);
         labelButtonEffect.setBackground(new Color(0x0E5C2F));
         labelButtonEffect.setOpaque(false);
 
         button = new JButton("Button");
-        button.setBounds(637, 50, 129, 30);
+        button.setBounds(636, 50, 129, 30);
         button.setFocusable(false);
         button.setForeground(Color.WHITE);
         button.setFont(new Font("Arial Black", Font.PLAIN, 14));
@@ -154,17 +161,8 @@ public class ChartFrame extends JFrame implements ActionListener {
         button.setContentAreaFilled(false);
 
         ChartPanel chartPanel = getPanel();
+        chartPanel.setBounds(50, 120, 700, 500);
         chartPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
-
-        scrollPane = new JScrollPane();
-        scrollPane.setBounds(50, 120, 700, 400);
-        scrollPane.setBackground(new Color(0x363636));
-        scrollPane.getViewport().setBackground(new Color(0x363636));
-
-        JLabel labelButtonEffectSave = new JLabel();
-        labelButtonEffectSave.setBounds(680, 450, 40, 40);
-        labelButtonEffectSave.setBackground(new Color(0x262626));
-        labelButtonEffectSave.setOpaque(false);
 
         ImageIcon saveIcon = null;
         try {
@@ -178,17 +176,76 @@ public class ChartFrame extends JFrame implements ActionListener {
             e.printStackTrace();
         }
 
+        labelException = new JLabel();
+        labelException.setVisible(false);
+        labelException.setBounds(0, 620, 800, 30);
+        labelException.setHorizontalAlignment(SwingConstants.CENTER);
+        labelException.setVerticalAlignment(SwingConstants.CENTER);
+        labelException.setFont(new Font("Arial Black", Font.PLAIN, 16));
+        labelException.setForeground(Color.RED);
+
+        URL labelTextfieldURL = getClass().getResource("/greenChartTitle.png");
+        ImageIcon labelTextfield = null;
+        if (labelTextfieldURL == null) {
+            System.err.println("Resource not found: /greenChartTitle.png");
+        } else {
+            labelTextfield = new ImageIcon(labelTextfieldURL);
+        }
+
+        JLabel labelTextfieldSaveWidth = new JLabel();
+        labelTextfieldSaveWidth.setIcon(labelTextfield);
+        labelTextfieldSaveWidth.setBounds(70, 651, 160, 34);
+        labelTextfieldSaveWidth.setText("Number of Rows");
+        labelTextfieldSaveWidth.setFont(new Font("Arial Black", Font.PLAIN, 12));
+        labelTextfieldSaveWidth.setForeground(Color.WHITE);
+        labelTextfieldSaveWidth.setHorizontalTextPosition(JLabel.CENTER);
+
+        textFieldSaveWidth = new JTextField("700");
+        textFieldSaveWidth.setBounds(50, 675, 300, 40);
+        textFieldSaveWidth.setBackground(new Color(0x363636));
+        textFieldSaveWidth.setForeground(Color.WHITE);
+        textFieldSaveWidth.setFont(new Font("Arial Black", Font.PLAIN, 16));
+        textFieldSaveWidth.setCaretColor(new Color(0xC9C9C9));
+        textFieldSaveWidth.setHorizontalAlignment(JTextField.CENTER);
+
+        JLabel labelTextfieldSaveHeight = new JLabel();
+        labelTextfieldSaveHeight.setIcon(labelTextfield);
+        labelTextfieldSaveHeight.setBounds(400, 651, 160, 34);
+        labelTextfieldSaveHeight.setText("Number of Columns");
+        labelTextfieldSaveHeight.setFont(new Font("Arial Black", Font.PLAIN, 12));
+        labelTextfieldSaveHeight.setForeground(Color.WHITE);
+        labelTextfieldSaveHeight.setHorizontalTextPosition(JLabel.CENTER);
+
+        textFieldSaveHeight = new JTextField("500");
+        textFieldSaveHeight.setBounds(380, 675, 300, 40);
+        textFieldSaveHeight.setBackground(new Color(0x363636));
+        textFieldSaveHeight.setForeground(Color.WHITE);
+        textFieldSaveHeight.setFont(new Font("Arial Black", Font.PLAIN, 16));
+        textFieldSaveHeight.setCaretColor(new Color(0xC9C9C9));
+        textFieldSaveHeight.setHorizontalAlignment(JTextField.CENTER);
+
+        JLabel labelButtonEffectSave = new JLabel();
+        labelButtonEffectSave.setBounds(710, 675, 40, 40);
+        labelButtonEffectSave.setBackground(new Color(0x262626));
+        labelButtonEffectSave.setOpaque(false);
+
         buttonSave = new JButton();
         buttonSave.setBackground(new Color(0x217346));
-        buttonSave.setBounds(680, 450, 40, 40);
+        buttonSave.setBounds(710, 675, 40, 40);
         buttonSave.setIcon(saveIcon);
         buttonSave.setFocusable(false);
         buttonSave.addActionListener(this);
         buttonSave.setBorderPainted(false);
         buttonSave.addMouseListener(new ButtonMouseListener(buttonSave, labelButtonEffectSave));
 
+        JLabel labelInfoText = new JLabel("This app made by Kerem YILMAZ, Salih Kerim ASLAN, Semih BEKDAŞ, Ahmet Emin ÇAKIR in 2024");
+        labelInfoText.setFont(new Font("Cambria Math", Font.PLAIN, 16));
+        labelInfoText.setForeground(Color.WHITE);
+        labelInfoText.setBounds(0,730,800,20);
+        labelInfoText.setHorizontalAlignment(JLabel.CENTER);
+
         JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setBounds(0,0,920,920);
+        layeredPane.setBounds(0,0,816,800);
 
         this.add(layeredPane);
         layeredPane.add(panelMenu);
@@ -197,7 +254,7 @@ public class ChartFrame extends JFrame implements ActionListener {
 
         layeredPane.add(buttonBack, Integer.valueOf(1));
         layeredPane.add(buttonEnterData, Integer.valueOf(1));
-        layeredPane.add(buttonClear, Integer.valueOf(1));
+        layeredPane.add(buttonOpenFile, Integer.valueOf(1));
         layeredPane.add(button, Integer.valueOf(1));
         layeredPane.add(labelButtonEffectBack, Integer.valueOf(1));
         layeredPane.add(labelButtonEffectEnterData, Integer.valueOf(1));
@@ -205,6 +262,13 @@ public class ChartFrame extends JFrame implements ActionListener {
         layeredPane.add(labelButtonEffect, Integer.valueOf(1));
 
         layeredPane.add(chartPanel, Integer.valueOf(1));
+
+        layeredPane.add(labelException, Integer.valueOf(1));
+
+        layeredPane.add(labelTextfieldSaveWidth, Integer.valueOf(1));
+        layeredPane.add(textFieldSaveWidth);
+        layeredPane.add(labelTextfieldSaveHeight, Integer.valueOf(1));
+        layeredPane.add(textFieldSaveHeight);
 
         layeredPane.add(buttonSave, Integer.valueOf(1));
         layeredPane.add(labelButtonEffectSave, Integer.valueOf(1));
@@ -215,6 +279,7 @@ public class ChartFrame extends JFrame implements ActionListener {
         layeredPane.add(labelMenuLine4, Integer.valueOf(1));
         layeredPane.add(labelMenuLine5, Integer.valueOf(1));
         layeredPane.add(labelMenuLine6, Integer.valueOf(1));
+        layeredPane.add(labelInfoText);
 
         this.getContentPane().setBackground(new Color(0x262626));
         this.setLayout(null);
@@ -238,44 +303,72 @@ public class ChartFrame extends JFrame implements ActionListener {
             EnterDataFrame enterDataFrame = new EnterDataFrame();
         }
 
+        if (e.getSource() == buttonOpenFile){
+            this.dispose();
+            OpenFileFrame openFileFrame = new OpenFileFrame();
+        }
+
         if (e.getSource() == buttonSave){
             JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("PNG & JPG Files","png", "jpg");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("JPEG Files","jpeg");
             fileChooser.setFileFilter(filter);
 
             int response = fileChooser.showSaveDialog(null);
 
             if (response == JFileChooser.APPROVE_OPTION){
-
+                File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+                if (!file.getAbsolutePath().endsWith(".jpg")) {
+                    file = new File(file.getAbsolutePath() + ".jpg");
+                }
+                try {
+                    ChartUtils.saveChartAsJPEG(file, getChart(), Integer.parseInt(textFieldSaveWidth.getText()), Integer.parseInt(textFieldSaveHeight.getText()));
+                    labelException.setVisible(false);
+                } catch (Exception exception) {
+                    labelException.setText("Please input only positive integer values in the text fields.");
+                    labelException.setVisible(true);
+                }
             }
         }
     }
 
-    public ChartPanel getPanel() throws IOException {
+    public ChartPanel getPanel() {
         if (choose.equals("Line Chart")){
             LineChartMaker chartMaker = new LineChartMaker(headers, data, chartTitle, xAxisLabel, yAxisLabel);
             ChartPanel chartPanel = chartMaker.getPanel();
-            chartPanel.setBounds(50, 120, 700, 400);
             return chartPanel;
         }
         else if (choose.equals("Pie Chart")){
-            PieChartMaker chartMaker = new PieChartMaker(headers, data, chartTitle, xAxisLabel, yAxisLabel);
+            PieChartMaker chartMaker = new PieChartMaker(headers, data, chartTitle);
             ChartPanel chartPanel = chartMaker.getPanel();
-            chartPanel.setBounds(50, 120, 700, 400);
             return chartPanel;
         }
         else if (choose.equals("Scatter Chart")){
             ScatterChartMaker chartMaker = new ScatterChartMaker(headers, data, chartTitle, xAxisLabel, yAxisLabel);
             ChartPanel chartPanel = chartMaker.getPanel();
-            chartPanel.setBounds(50, 120, 700, 400);
             return chartPanel;
         }
         else if (choose.equals("Bar Chart")){
             BarChartMaker chartMaker = new BarChartMaker(headers, data, chartTitle, xAxisLabel, yAxisLabel);
             ChartPanel chartPanel = chartMaker.getPanel();
-            chartPanel.setBounds(50, 120, 700, 400);
             return chartPanel;
+        }
+        return null;
+    }
+
+    public JFreeChart getChart() {
+        if (choose.equals("Line Chart")) {
+            LineChartMaker chartMaker = new LineChartMaker(headers, data, chartTitle, xAxisLabel, yAxisLabel);
+            return chartMaker.getChart();
+        } else if (choose.equals("Pie Chart")) {
+            PieChartMaker chartMaker = new PieChartMaker(headers, data, chartTitle);
+            return chartMaker.getChart();
+        } else if (choose.equals("Scatter Chart")) {
+            ScatterChartMaker chartMaker = new ScatterChartMaker(headers, data, chartTitle, xAxisLabel, yAxisLabel);
+            return chartMaker.getChart();
+        } else if (choose.equals("Bar Chart")) {
+            BarChartMaker chartMaker = new BarChartMaker(headers, data, chartTitle, xAxisLabel, yAxisLabel);
+            return chartMaker.getChart();
         }
         return null;
     }

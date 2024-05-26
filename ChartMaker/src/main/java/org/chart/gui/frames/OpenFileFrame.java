@@ -61,13 +61,15 @@ public class OpenFileFrame extends JFrame implements ActionListener {
             } else {
                 System.err.println("Resource not found: /greenLine.png");
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
 
         JLabel labelMenuLine1 = new JLabel();
         labelMenuLine1.setIcon(lineGreen);
-        labelMenuLine1.setBounds(17, 55, 60, 20);
+        labelMenuLine1.setBounds(16, 55, 60, 20);
 
         JLabel labelMenuLine2 = new JLabel();
         labelMenuLine2.setIcon(lineGreen);
@@ -75,11 +77,11 @@ public class OpenFileFrame extends JFrame implements ActionListener {
 
         JLabel labelMenuLine3 = new JLabel();
         labelMenuLine3.setIcon(lineGreen);
-        labelMenuLine3.setBounds(343, 55, 60, 20);
+        labelMenuLine3.setBounds(344, 55, 60, 20);
 
         JLabel labelMenuLine4 = new JLabel();
         labelMenuLine4.setIcon(lineGreen);
-        labelMenuLine4.setBounds(457, 55, 60, 20);
+        labelMenuLine4.setBounds(456, 55, 60, 20);
 
         JLabel labelMenuLine5 = new JLabel();
         labelMenuLine5.setIcon(lineGreen);
@@ -87,15 +89,15 @@ public class OpenFileFrame extends JFrame implements ActionListener {
 
         JLabel labelMenuLine6 = new JLabel();
         labelMenuLine6.setIcon(lineGreen);
-        labelMenuLine6.setBounds(783, 55, 60, 20);
+        labelMenuLine6.setBounds(784, 55, 60, 20);
 
         JLabel labelButtonEffectBack = new JLabel();
-        labelButtonEffectBack.setBounds(27, 50, 126, 30);
+        labelButtonEffectBack.setBounds(32, 50, 129, 30);
         labelButtonEffectBack.setBackground(new Color(0x0E5C2F));
         labelButtonEffectBack.setOpaque(false);
 
         buttonBack = new JButton("Back");
-        buttonBack.setBounds(27, 50, 126, 30);
+        buttonBack.setBounds(32, 50, 129, 30);
         buttonBack.setFocusable(false);
         buttonBack.setForeground(Color.WHITE);
         buttonBack.setFont(new Font("Arial Black", Font.PLAIN, 14));
@@ -106,12 +108,12 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         buttonBack.setContentAreaFilled(false);
 
         JLabel labelButtonEffectEnterData = new JLabel();
-        labelButtonEffectEnterData.setBounds(189, 50, 126, 30);
+        labelButtonEffectEnterData.setBounds(196, 50, 129, 30);
         labelButtonEffectEnterData.setBackground(new Color(0x0E5C2F));
         labelButtonEffectEnterData.setOpaque(false);
 
         buttonEnterData = new JButton("Enter Data");
-        buttonEnterData.setBounds(189, 50, 126, 30);
+        buttonEnterData.setBounds(196, 50, 129, 30);
         buttonEnterData.setFocusable(false);
         buttonEnterData.setForeground(Color.WHITE);
         buttonEnterData.setFont(new Font("Arial Black", Font.PLAIN, 14));
@@ -122,12 +124,12 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         buttonEnterData.setContentAreaFilled(false);
 
         JLabel labelButtonEffectClear = new JLabel();
-        labelButtonEffectClear.setBounds(475, 50, 126, 30);
+        labelButtonEffectClear.setBounds(472, 50, 129, 30);
         labelButtonEffectClear.setBackground(new Color(0x0E5C2F));
         labelButtonEffectClear.setOpaque(false);
 
         buttonClear = new JButton("Clear");
-        buttonClear.setBounds(475, 50, 126, 30);
+        buttonClear.setBounds(472, 50, 129, 30);
         buttonClear.setFocusable(false);
         buttonClear.setForeground(Color.WHITE);
         buttonClear.setFont(new Font("Arial Black", Font.PLAIN, 14));
@@ -138,12 +140,12 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         buttonClear.setContentAreaFilled(false);
 
         JLabel labelButtonEffect = new JLabel();
-        labelButtonEffect.setBounds(637, 50, 129, 30);
+        labelButtonEffect.setBounds(636, 50, 129, 30);
         labelButtonEffect.setBackground(new Color(0x0E5C2F));
         labelButtonEffect.setOpaque(false);
 
         button = new JButton("Button");
-        button.setBounds(637, 50, 126, 30);
+        button.setBounds(636, 50, 129, 30);
         button.setFocusable(false);
         button.setForeground(Color.WHITE);
         button.setFont(new Font("Arial Black", Font.PLAIN, 14));
@@ -206,7 +208,7 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         textFieldNumberOfRows.setForeground(Color.WHITE);
         textFieldNumberOfRows.setFont(new Font("Arial Black", Font.PLAIN, 16));
         textFieldNumberOfRows.setCaretColor(new Color(0xC9C9C9));
-        textFieldNumberOfRows.setHorizontalAlignment(JTextField.CENTER);;
+        textFieldNumberOfRows.setHorizontalAlignment(JTextField.CENTER);
         textFieldNumberOfRows.setEditable(false);
 
         JLabel labelTextfieldColumn = new JLabel();
@@ -293,7 +295,7 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         comboBoxChartType.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setBounds(0,0,920,920);
+        layeredPane.setBounds(0,0,816,800);
 
         this.add(layeredPane);
         layeredPane.add(panelMenu);
@@ -423,9 +425,6 @@ public class OpenFileFrame extends JFrame implements ActionListener {
                         for (int i = 0; i < data.length; i++){
                             tableModel.addRow(data[i]);
                         }
-
-                        System.out.println(rowsCount);
-                        System.out.println(columnsCount);
                     }
 
                     catch (Exception ex) {
@@ -453,18 +452,43 @@ public class OpenFileFrame extends JFrame implements ActionListener {
                 labelException.setVisible(true);
             }
 
-            else {
+            else if (comboBoxChartType.getSelectedItem() == "Pie Chart"){
                 this.dispose();
+
                 try {
                     ChartFrame chartFrame = new ChartFrame(
                             String.valueOf(comboBoxChartType.getSelectedItem()),
                             headers,
                             data,
                             textFieldChartTitle.getText(),
-                            "X-Axis",
-                            "Y-Axis");
-                } catch (IOException ex) {
+                            "",
+                            "");
+                }
+
+                catch (IOException ex) {
                     throw new RuntimeException(ex);
+                }
+            }
+
+            else {
+                XYTitleDialog dialog = new XYTitleDialog(null);
+
+                if (dialog.showDialog()) {
+                    this.dispose();
+
+                    try {
+                        ChartFrame chartFrame = new ChartFrame(
+                                String.valueOf(comboBoxChartType.getSelectedItem()),
+                                headers,
+                                data,
+                                textFieldChartTitle.getText(),
+                                dialog.getxTitle(),
+                                dialog.getyTitle());
+                    }
+
+                    catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
         }

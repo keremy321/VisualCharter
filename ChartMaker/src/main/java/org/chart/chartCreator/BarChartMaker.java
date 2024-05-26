@@ -15,32 +15,35 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import java.awt.*;
 
 public class BarChartMaker {
-    private static String[] columnHeaders;
-    private static String[][] rowData;
+    private static String[] headers;
+    private static String[][] data;
     private static String chartTitle;
     private static String xAxisLabel;
     private static String yAxisLabel;
+    private JFreeChart chart;
 
     public BarChartMaker(String[] headers, String[][] data, String chartTitle, String xAxisLabel, String yAxisLabel) {
-        this.columnHeaders = headers;
-        this.rowData = data;
+        this.headers = headers;
+        this.data = data;
         this.chartTitle = chartTitle;
         this.xAxisLabel = xAxisLabel;
         this.yAxisLabel = yAxisLabel;
+        createChart();
     }
-    public static ChartPanel getPanel(){
+
+    private void createChart() {
         DefaultCategoryDataset barDataset = new DefaultCategoryDataset();
-        for (int i = 0; i < rowData.length; i++) {
-            for (int j = 1; j < rowData[i].length; j++) {
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 1; j < data[i].length; j++) {
                 try {
-                    double value = Double.parseDouble(rowData[i][j]);
-                    barDataset.addValue(value, columnHeaders[j], rowData[i][0]);
+                    double value = Double.parseDouble(data[i][j]);
+                    barDataset.addValue(value, headers[j], data[i][0]);
                 } catch (NumberFormatException e) {
-                    // Eğer değer bir sayı değilse, grafiğe eklemiyoruz
+                    // Skip if value is not a number
                 }
             }
         }
-        JFreeChart chart = ChartFactory.createBarChart(
+        chart = ChartFactory.createBarChart(
                 chartTitle, // Chart Title
                 xAxisLabel, // Category axis
                 yAxisLabel, // Value axis
@@ -89,6 +92,13 @@ public class BarChartMaker {
         for (int i = 0; i < barDataset.getRowCount(); i++) {
             renderer.setSeriesPaint(i, colors[i % colors.length]);
         }
+    }
+
+    public ChartPanel getPanel() {
         return new ChartPanel(chart);
+    }
+
+    public JFreeChart getChart() {
+        return chart;
     }
 }

@@ -13,26 +13,30 @@ import org.jfree.data.xy.XYSeriesCollection;
 import java.awt.*;
 
 public class ScatterChartMaker {
-    private static String[] columnHeaders;
-    private static String[][] rowData;
+    private static String[] headers;
+    private static String[][] data;
     private static String chartTitle;
     private static String xAxisLabel;
     private static String yAxisLabel;
+    private JFreeChart chart;
+
     public ScatterChartMaker(String[] headers, String[][] data, String chartTitle, String xAxisLabel, String yAxisLabel) {
-        this.columnHeaders = headers;
-        this.rowData = data;
+        this.headers = headers;
+        this.data = data;
         this.chartTitle = chartTitle;
         this.xAxisLabel = xAxisLabel;
         this.yAxisLabel = yAxisLabel;
+        createChart();
     }
-    public static ChartPanel getPanel(){
+
+    private void createChart() {
         XYSeriesCollection scatterDataset = new XYSeriesCollection();
-        for (int j = 1; j < columnHeaders.length; j++) { // Assume the first column is the category
-            XYSeries series = new XYSeries(columnHeaders[j]);
-            for (int i = 0; i < rowData.length; i++) {
+        for (int j = 1; j < headers.length; j++) { // Assume the first column is the category
+            XYSeries series = new XYSeries(headers[j]);
+            for (int i = 0; i < data.length; i++) {
                 try {
-                    double xValue = Double.parseDouble(rowData[i][0]); // X-axis value
-                    double yValue = Double.parseDouble(rowData[i][j]); // Y-axis value
+                    double xValue = Double.parseDouble(data[i][0]); // X-axis value
+                    double yValue = Double.parseDouble(data[i][j]); // Y-axis value
                     series.add(xValue, yValue);
                 } catch (NumberFormatException e) {
                     // If the value is not a number, do not add it to the chart
@@ -40,7 +44,7 @@ public class ScatterChartMaker {
             }
             scatterDataset.addSeries(series);
         }
-        JFreeChart chart = ChartFactory.createScatterPlot(
+        chart = ChartFactory.createScatterPlot(
                 chartTitle,
                 xAxisLabel,
                 yAxisLabel,
@@ -76,8 +80,13 @@ public class ScatterChartMaker {
         plot.getRenderer().setSeriesPaint(0, new Color(0x2D7C3C));
         plot.getRenderer().setSeriesPaint(1, new Color(0xD24738));
         plot.getRenderer().setSeriesPaint(2, new Color(0x5EADD6));
+    }
 
-
+    public ChartPanel getPanel() {
         return new ChartPanel(chart);
+    }
+
+    public JFreeChart getChart() {
+        return chart;
     }
 }

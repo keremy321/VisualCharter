@@ -59,35 +59,35 @@ public class EnterDataFrame extends JFrame implements ActionListener {
 
         JLabel labelMenuLine1 = new JLabel();
         labelMenuLine1.setIcon(lineGreen);
-        labelMenuLine1.setBounds(9, 55, 60, 20);
+        labelMenuLine1.setBounds(16, 55, 60, 20);
 
         JLabel labelMenuLine2 = new JLabel();
         labelMenuLine2.setIcon(lineGreen);
-        labelMenuLine2.setBounds(171, 55, 60, 20);
+        labelMenuLine2.setBounds(180, 55, 60, 20);
 
         JLabel labelMenuLine3 = new JLabel();
         labelMenuLine3.setIcon(lineGreen);
-        labelMenuLine3.setBounds(333, 55, 60, 20);
+        labelMenuLine3.setBounds(344, 55, 60, 20);
 
         JLabel labelMenuLine4 = new JLabel();
         labelMenuLine4.setIcon(lineGreen);
-        labelMenuLine4.setBounds(467, 55, 60, 20);
+        labelMenuLine4.setBounds(456, 55, 60, 20);
 
         JLabel labelMenuLine5 = new JLabel();
         labelMenuLine5.setIcon(lineGreen);
-        labelMenuLine5.setBounds(619, 55, 60, 20);
+        labelMenuLine5.setBounds(620, 55, 60, 20);
 
         JLabel labelMenuLine6 = new JLabel();
         labelMenuLine6.setIcon(lineGreen);
-        labelMenuLine6.setBounds(781, 55, 60, 20);
+        labelMenuLine6.setBounds(784, 55, 60, 20);
 
         JLabel labelButtonEffectBack = new JLabel();
-        labelButtonEffectBack.setBounds(27, 50, 126, 30);
+        labelButtonEffectBack.setBounds(32, 50, 126, 30);
         labelButtonEffectBack.setBackground(new Color(0x0E5C2F));
         labelButtonEffectBack.setOpaque(false);
 
         buttonBack = new JButton("Back");
-        buttonBack.setBounds(27, 50, 126, 30);
+        buttonBack.setBounds(32, 50, 126, 30);
         buttonBack.setFocusable(false);
         buttonBack.setForeground(Color.WHITE);
         buttonBack.setFont(new Font("Arial Black", Font.PLAIN, 14));
@@ -98,12 +98,12 @@ public class EnterDataFrame extends JFrame implements ActionListener {
         buttonBack.setContentAreaFilled(false);
 
         JLabel labelButtonEffectOpenFile = new JLabel();
-        labelButtonEffectOpenFile.setBounds(189, 50, 126, 30);
+        labelButtonEffectOpenFile.setBounds(196, 50, 126, 30);
         labelButtonEffectOpenFile.setBackground(new Color(0x0E5C2F));
         labelButtonEffectOpenFile.setOpaque(false);
 
         buttonOpenFile = new JButton("Open File");
-        buttonOpenFile.setBounds(189, 50, 126, 30);
+        buttonOpenFile.setBounds(196, 50, 126, 30);
         buttonOpenFile.setFocusable(false);
         buttonOpenFile.setForeground(Color.WHITE);
         buttonOpenFile.setFont(new Font("Arial Black", Font.PLAIN, 14));
@@ -114,12 +114,12 @@ public class EnterDataFrame extends JFrame implements ActionListener {
         buttonOpenFile.setContentAreaFilled(false);
 
         JLabel labelButtonEffectClear = new JLabel();
-        labelButtonEffectClear.setBounds(475, 50, 126, 30);
+        labelButtonEffectClear.setBounds(472, 50, 126, 30);
         labelButtonEffectClear.setBackground(new Color(0x0E5C2F));
         labelButtonEffectClear.setOpaque(false);
 
         buttonClear = new JButton("Clear");
-        buttonClear.setBounds(475, 50, 126, 30);
+        buttonClear.setBounds(472, 50, 126, 30);
         buttonClear.setFocusable(false);
         buttonClear.setForeground(Color.WHITE);
         buttonClear.setFont(new Font("Arial Black", Font.PLAIN, 14));
@@ -130,12 +130,12 @@ public class EnterDataFrame extends JFrame implements ActionListener {
         buttonClear.setContentAreaFilled(false);
 
         JLabel labelButtonEffect = new JLabel();
-        labelButtonEffect.setBounds(637, 50, 129, 30);
+        labelButtonEffect.setBounds(636, 50, 129, 30);
         labelButtonEffect.setBackground(new Color(0x0E5C2F));
         labelButtonEffect.setOpaque(false);
 
         button = new JButton("Button");
-        button.setBounds(637, 50, 126, 30);
+        button.setBounds(636, 50, 126, 30);
         button.setFocusable(false);
         button.setForeground(Color.WHITE);
         button.setFont(new Font("Arial Black", Font.PLAIN, 14));
@@ -284,7 +284,7 @@ public class EnterDataFrame extends JFrame implements ActionListener {
         buttonCreate.addMouseListener(new ButtonMouseListener(buttonCreate, labelButtonEffectCreate));
 
         JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setBounds(0,0,920,920);
+        layeredPane.setBounds(0,0,816,800);
 
         this.add(layeredPane);
         layeredPane.add(panelMenu);
@@ -363,7 +363,7 @@ public class EnterDataFrame extends JFrame implements ActionListener {
             }
 
             catch (Exception exception){
-                labelException.setText("Please input only integer values in the text fields.");
+                labelException.setText("Please input only positive integer values in the text fields.");
                 labelException.setVisible(true);
             }
         }
@@ -400,17 +400,44 @@ public class EnterDataFrame extends JFrame implements ActionListener {
                     }
                 }
 
-                this.dispose();
-                try {
-                    ChartFrame chartFrame = new ChartFrame(
-                            String.valueOf(comboBoxChartType.getSelectedItem()),
-                            headers,
-                            data,
-                            textFieldChartTitle.getText(),
-                            "X-Axis",
-                            "Y-Axis");
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                if (comboBoxChartType.getSelectedItem() != "Pie Chart"){
+                    XYTitleDialog dialog = new XYTitleDialog(null);
+
+                    if (dialog.showDialog()) {
+                        this.dispose();
+
+                        try {
+                            ChartFrame chartFrame = new ChartFrame(
+                                    String.valueOf(comboBoxChartType.getSelectedItem()),
+                                    headers,
+                                    data,
+                                    textFieldChartTitle.getText(),
+                                    dialog.getxTitle(),
+                                    dialog.getyTitle());
+                        }
+
+                        catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    }
+                }
+
+                else if (comboBoxChartType.getSelectedItem() == "Pie Chart"){
+                    this.dispose();
+
+                    try {
+                        ChartFrame chartFrame = new ChartFrame(
+                                String.valueOf(comboBoxChartType.getSelectedItem()),
+                                headers,
+                                data,
+                                textFieldChartTitle.getText(),
+                                "",
+                                "");
+                    }
+
+                    catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
         }

@@ -39,7 +39,7 @@ public class MainFrame extends JFrame implements ActionListener {
         labelWelcomeText.setBounds(0,100,800,30);
         labelWelcomeText.setHorizontalAlignment(JLabel.CENTER);
 
-        JLabel labelInfoText = new JLabel("This app made by ... in 2024");
+        JLabel labelInfoText = new JLabel("This app made by Kerem YILMAZ, Salih Kerim ASLAN, Semih BEKDAŞ, Ahmet Emin ÇAKIR in 2024");
         labelInfoText.setFont(new Font("Cambria Math", Font.PLAIN, 16));
         labelInfoText.setForeground(Color.WHITE);
         labelInfoText.setBounds(0,530,800,20);
@@ -78,7 +78,7 @@ public class MainFrame extends JFrame implements ActionListener {
         buttonOpenFile.addMouseListener(new ButtonMouseListener(buttonOpenFile, labelButtonEffectOpenFile));
 
         JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setBounds(0,0,920,920);
+        layeredPane.setBounds(0,0,816,800);
 
         this.add(layeredPane);
         layeredPane.add(panelTop);

@@ -16,29 +16,29 @@ import java.awt.*;
 import java.text.DecimalFormat;
 
 public class PieChartMaker {
-    private static String[] columnHeaders;
-    private static String[][] rowData;
+    private static String[] headers;
+    private static String[][] data;
     private static String chartTitle;
-    private static String xAxisLabel;
-    private static String yAxisLabel;
-    public PieChartMaker(String[] headers, String[][] data, String chartTitle, String xAxisLabel, String yAxisLabel) {
-        this.columnHeaders = headers;
-        this.rowData = data;
+    private JFreeChart chart;
+
+    public PieChartMaker(String[] headers, String[][] data, String chartTitle) {
+        this.headers = headers;
+        this.data = data;
         this.chartTitle = chartTitle;
-        this.xAxisLabel = xAxisLabel;
-        this.yAxisLabel = yAxisLabel;
+        createChart();
     }
-    public static ChartPanel getPanel(){
+
+    private void createChart() {
         DefaultPieDataset pieDataset = new DefaultPieDataset();
-        for (int i = 0; i < rowData.length; i++) {
+        for (int i = 0; i < data.length; i++) {
             try {
-                double value = Double.parseDouble(rowData[i][1]); // İkinci sütunu değer olarak kabul ediyoruz
-                pieDataset.setValue(rowData[i][0], value); // İlk sütunu kategori olarak kullanıyoruz
+                double value = Double.parseDouble(data[i][1]); // Second column as value
+                pieDataset.setValue(data[i][0], value); // First column as category
             } catch (NumberFormatException e) {
-                // Eğer değer bir sayı değilse, grafiğe eklemiyoruz
+                // Skip if value is not a number
             }
         }
-        JFreeChart chart = ChartFactory.createPieChart(
+        chart = ChartFactory.createPieChart(
                 chartTitle,
                 pieDataset,
                 true,
@@ -60,8 +60,6 @@ public class PieChartMaker {
         plot.setLabelOutlinePaint(new Color(0x262626));
         plot.setLabelShadowPaint(Color.WHITE);
         plot.setLabelPaint(Color.WHITE);
-
-
         plot.setLabelPadding(new RectangleInsets(6, 6, 6, 6));
 
         LegendTitle legend = chart.getLegend();
@@ -77,19 +75,21 @@ public class PieChartMaker {
                 new Color(0x5EADD6)
         };
 
-        // Change the default colors
         int sectionCount = pieDataset.getItemCount();
-
         for (int i = 0; i < sectionCount; i++) {
             plot.setSectionPaint(pieDataset.getKey(i), colors[i % colors.length]);
         }
 
-        //Format Label
         PieSectionLabelGenerator labelGenerator = new StandardPieSectionLabelGenerator(
                 "{0} : ({2})", new DecimalFormat("0"), new DecimalFormat("0.00%"));
-        ((PiePlot) chart.getPlot()).setLabelGenerator(labelGenerator);
+        plot.setLabelGenerator(labelGenerator);
+    }
 
-
+    public ChartPanel getPanel() {
         return new ChartPanel(chart);
+    }
+
+    public JFreeChart getChart() {
+        return chart;
     }
 }
