@@ -15,7 +15,7 @@ public class EnterDataFrame extends JFrame implements ActionListener {
     JButton buttonBack;
     JButton buttonOpenFile;
     JButton buttonClear;
-    JButton button;
+    JButton buttonTutorial;
     JButton buttonCreate;
     JButton buttonGenerateTable;
 
@@ -129,21 +129,21 @@ public class EnterDataFrame extends JFrame implements ActionListener {
         buttonClear.addMouseListener(new ButtonMouseListenerMenu(buttonClear, labelButtonEffectClear));
         buttonClear.setContentAreaFilled(false);
 
-        JLabel labelButtonEffect = new JLabel();
-        labelButtonEffect.setBounds(636, 50, 129, 30);
-        labelButtonEffect.setBackground(new Color(0x0E5C2F));
-        labelButtonEffect.setOpaque(false);
+        JLabel labelButtonEffectTutorial = new JLabel();
+        labelButtonEffectTutorial.setBounds(636, 50, 129, 30);
+        labelButtonEffectTutorial.setBackground(new Color(0x0E5C2F));
+        labelButtonEffectTutorial.setOpaque(false);
 
-        button = new JButton("Button");
-        button.setBounds(636, 50, 126, 30);
-        button.setFocusable(false);
-        button.setForeground(Color.WHITE);
-        button.setFont(new Font("Arial Black", Font.PLAIN, 14));
-        button.addActionListener(this);
-        button.setBorderPainted(false);
-        button.setBackground(new Color(0x262626));
-        button.addMouseListener(new ButtonMouseListenerMenu(button, labelButtonEffect));
-        button.setContentAreaFilled(false);
+        buttonTutorial = new JButton("Tutorial");
+        buttonTutorial.setBounds(636, 50, 126, 30);
+        buttonTutorial.setFocusable(false);
+        buttonTutorial.setForeground(Color.WHITE);
+        buttonTutorial.setFont(new Font("Arial Black", Font.PLAIN, 14));
+        buttonTutorial.addActionListener(this);
+        buttonTutorial.setBorderPainted(false);
+        buttonTutorial.setBackground(new Color(0x262626));
+        buttonTutorial.addMouseListener(new ButtonMouseListenerMenu(buttonTutorial, labelButtonEffectTutorial));
+        buttonTutorial.setContentAreaFilled(false);
         URL labelTextfieldURL = getClass().getResource("/greenChartTitle.png");
         ImageIcon labelTextfield = null;
         if (labelTextfieldURL == null) {
@@ -293,11 +293,11 @@ public class EnterDataFrame extends JFrame implements ActionListener {
         layeredPane.add(buttonBack, Integer.valueOf(1));
         layeredPane.add(buttonOpenFile, Integer.valueOf(1));
         layeredPane.add(buttonClear, Integer.valueOf(1));
-        layeredPane.add(button, Integer.valueOf(1));
+        layeredPane.add(buttonTutorial, Integer.valueOf(1));
         layeredPane.add(labelButtonEffectBack, Integer.valueOf(1));
         layeredPane.add(labelButtonEffectOpenFile, Integer.valueOf(1));
         layeredPane.add(labelButtonEffectClear, Integer.valueOf(1));
-        layeredPane.add(labelButtonEffect, Integer.valueOf(1));
+        layeredPane.add(labelButtonEffectTutorial, Integer.valueOf(1));
 
         layeredPane.add(labelMenuLine1, Integer.valueOf(1));
         layeredPane.add(labelMenuLine2, Integer.valueOf(1));
@@ -327,7 +327,7 @@ public class EnterDataFrame extends JFrame implements ActionListener {
 
         this.getContentPane().setBackground(new Color(0x262626));
         this.setLayout(null);
-        this.setTitle("Enter Data Frame");
+        this.setTitle("Enter Data");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(816, 800);
         this.setLocationRelativeTo(null);
@@ -349,6 +349,11 @@ public class EnterDataFrame extends JFrame implements ActionListener {
 
         if (e.getSource() == buttonClear){
             clear();
+        }
+
+        if (e.getSource() == buttonTutorial){
+            this.dispose();
+            TutorialFrame tutorialFrame = new TutorialFrame();
         }
 
         if (e.getSource() == buttonGenerateTable){
@@ -387,12 +392,6 @@ public class EnterDataFrame extends JFrame implements ActionListener {
             }
 
             else {
-//                headers = new String[table.getColumnCount()];
-//                for (int i = 0; i < table.getColumnCount(); i++) {
-//                    headers[i] = table.getColumnName(i);
-//                }
-
-                // Collect data
                 data = new String[table.getRowCount()][table.getColumnCount()];
                 for (int row = 0; row < table.getRowCount(); row++) {
                     for (int col = 0; col < table.getColumnCount(); col++) {

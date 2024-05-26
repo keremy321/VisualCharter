@@ -1,6 +1,5 @@
 package org.chart.gui.frames;
 
-import org.apache.commons.compress.harmony.pack200.NewAttributeBands;
 import org.chart.chartCreator.BarChartMaker;
 import org.chart.chartCreator.LineChartMaker;
 import org.chart.chartCreator.PieChartMaker;
@@ -33,7 +32,7 @@ public class ChartFrame extends JFrame implements ActionListener {
     JButton buttonBack;
     JButton buttonEnterData;
     JButton buttonOpenFile;
-    JButton button;
+    JButton buttonTutorial;
 
     JLabel labelException;
 
@@ -144,21 +143,21 @@ public class ChartFrame extends JFrame implements ActionListener {
         buttonOpenFile.addMouseListener(new ButtonMouseListenerMenu(buttonOpenFile, labelButtonEffectClear));
         buttonOpenFile.setContentAreaFilled(false);
 
-        JLabel labelButtonEffect = new JLabel();
-        labelButtonEffect.setBounds(636, 50, 129, 30);
-        labelButtonEffect.setBackground(new Color(0x0E5C2F));
-        labelButtonEffect.setOpaque(false);
+        JLabel labelButtonEffectTutorial = new JLabel();
+        labelButtonEffectTutorial.setBounds(636, 50, 129, 30);
+        labelButtonEffectTutorial.setBackground(new Color(0x0E5C2F));
+        labelButtonEffectTutorial.setOpaque(false);
 
-        button = new JButton("Button");
-        button.setBounds(636, 50, 129, 30);
-        button.setFocusable(false);
-        button.setForeground(Color.WHITE);
-        button.setFont(new Font("Arial Black", Font.PLAIN, 14));
-        button.addActionListener(this);
-        button.setBorderPainted(false);
-        button.setBackground(new Color(0x262626));
-        button.addMouseListener(new ButtonMouseListenerMenu(button, labelButtonEffect));
-        button.setContentAreaFilled(false);
+        buttonTutorial = new JButton("Tutorial");
+        buttonTutorial.setBounds(636, 50, 129, 30);
+        buttonTutorial.setFocusable(false);
+        buttonTutorial.setForeground(Color.WHITE);
+        buttonTutorial.setFont(new Font("Arial Black", Font.PLAIN, 14));
+        buttonTutorial.addActionListener(this);
+        buttonTutorial.setBorderPainted(false);
+        buttonTutorial.setBackground(new Color(0x262626));
+        buttonTutorial.addMouseListener(new ButtonMouseListenerMenu(buttonTutorial, labelButtonEffectTutorial));
+        buttonTutorial.setContentAreaFilled(false);
 
         ChartPanel chartPanel = getPanel();
         chartPanel.setBounds(50, 120, 700, 500);
@@ -195,7 +194,7 @@ public class ChartFrame extends JFrame implements ActionListener {
         JLabel labelTextfieldSaveWidth = new JLabel();
         labelTextfieldSaveWidth.setIcon(labelTextfield);
         labelTextfieldSaveWidth.setBounds(70, 651, 160, 34);
-        labelTextfieldSaveWidth.setText("Number of Rows");
+        labelTextfieldSaveWidth.setText("Save Width");
         labelTextfieldSaveWidth.setFont(new Font("Arial Black", Font.PLAIN, 12));
         labelTextfieldSaveWidth.setForeground(Color.WHITE);
         labelTextfieldSaveWidth.setHorizontalTextPosition(JLabel.CENTER);
@@ -211,7 +210,7 @@ public class ChartFrame extends JFrame implements ActionListener {
         JLabel labelTextfieldSaveHeight = new JLabel();
         labelTextfieldSaveHeight.setIcon(labelTextfield);
         labelTextfieldSaveHeight.setBounds(400, 651, 160, 34);
-        labelTextfieldSaveHeight.setText("Number of Columns");
+        labelTextfieldSaveHeight.setText("Save Height");
         labelTextfieldSaveHeight.setFont(new Font("Arial Black", Font.PLAIN, 12));
         labelTextfieldSaveHeight.setForeground(Color.WHITE);
         labelTextfieldSaveHeight.setHorizontalTextPosition(JLabel.CENTER);
@@ -226,7 +225,7 @@ public class ChartFrame extends JFrame implements ActionListener {
 
         JLabel labelButtonEffectSave = new JLabel();
         labelButtonEffectSave.setBounds(710, 675, 40, 40);
-        labelButtonEffectSave.setBackground(new Color(0x262626));
+        labelButtonEffectSave.setBackground(new Color(0x363636));
         labelButtonEffectSave.setOpaque(false);
 
         buttonSave = new JButton();
@@ -255,11 +254,11 @@ public class ChartFrame extends JFrame implements ActionListener {
         layeredPane.add(buttonBack, Integer.valueOf(1));
         layeredPane.add(buttonEnterData, Integer.valueOf(1));
         layeredPane.add(buttonOpenFile, Integer.valueOf(1));
-        layeredPane.add(button, Integer.valueOf(1));
+        layeredPane.add(buttonTutorial, Integer.valueOf(1));
         layeredPane.add(labelButtonEffectBack, Integer.valueOf(1));
         layeredPane.add(labelButtonEffectEnterData, Integer.valueOf(1));
         layeredPane.add(labelButtonEffectClear, Integer.valueOf(1));
-        layeredPane.add(labelButtonEffect, Integer.valueOf(1));
+        layeredPane.add(labelButtonEffectTutorial, Integer.valueOf(1));
 
         layeredPane.add(chartPanel, Integer.valueOf(1));
 
@@ -281,9 +280,10 @@ public class ChartFrame extends JFrame implements ActionListener {
         layeredPane.add(labelMenuLine6, Integer.valueOf(1));
         layeredPane.add(labelInfoText);
 
+
         this.getContentPane().setBackground(new Color(0x262626));
         this.setLayout(null);
-        this.setTitle("Open File Frame");
+        this.setTitle(chartTitle);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(816, 800);
         this.setLocationRelativeTo(null);
@@ -306,6 +306,11 @@ public class ChartFrame extends JFrame implements ActionListener {
         if (e.getSource() == buttonOpenFile){
             this.dispose();
             OpenFileFrame openFileFrame = new OpenFileFrame();
+        }
+
+        if (e.getSource() == buttonTutorial){
+            this.dispose();
+            TutorialFrame tutorialFrame = new TutorialFrame();
         }
 
         if (e.getSource() == buttonSave){

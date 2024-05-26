@@ -17,10 +17,10 @@ public class ExcelReader {
     public ExcelReader(String filePath) throws Exception {
         this.data = new ArrayList<>();
         this.headers = new ArrayList<>();
-        ExcelReader(filePath);
+        readExcelFile(filePath);
     }
 
-    private void ExcelReader(String filePath) throws Exception {
+    private void readExcelFile(String filePath) throws Exception {
         FileInputStream fis = new FileInputStream(new File(filePath));
 
         Workbook workbook = WorkbookFactory.create(fis);

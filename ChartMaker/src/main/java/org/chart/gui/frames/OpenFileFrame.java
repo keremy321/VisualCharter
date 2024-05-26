@@ -1,5 +1,8 @@
 package org.chart.gui.frames;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbookFactory;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFWorkbookFactory;
 import org.chart.fileReader.CSVReader;
 import org.chart.fileReader.ExcelReader;
 import org.chart.gui.customizations.ButtonMouseListener;
@@ -22,7 +25,7 @@ public class OpenFileFrame extends JFrame implements ActionListener {
     JButton buttonBack;
     JButton buttonEnterData;
     JButton buttonClear;
-    JButton button;
+    JButton buttonTutorial;
     JButton buttonCreate;
     JButton buttonOpenFile;
 
@@ -139,21 +142,21 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         buttonClear.addMouseListener(new ButtonMouseListenerMenu(buttonClear, labelButtonEffectClear));
         buttonClear.setContentAreaFilled(false);
 
-        JLabel labelButtonEffect = new JLabel();
-        labelButtonEffect.setBounds(636, 50, 129, 30);
-        labelButtonEffect.setBackground(new Color(0x0E5C2F));
-        labelButtonEffect.setOpaque(false);
+        JLabel labelButtonEffectTutorial = new JLabel();
+        labelButtonEffectTutorial.setBounds(636, 50, 129, 30);
+        labelButtonEffectTutorial.setBackground(new Color(0x0E5C2F));
+        labelButtonEffectTutorial.setOpaque(false);
 
-        button = new JButton("Button");
-        button.setBounds(636, 50, 129, 30);
-        button.setFocusable(false);
-        button.setForeground(Color.WHITE);
-        button.setFont(new Font("Arial Black", Font.PLAIN, 14));
-        button.addActionListener(this);
-        button.setBorderPainted(false);
-        button.setBackground(new Color(0x262626));
-        button.addMouseListener(new ButtonMouseListenerMenu(button, labelButtonEffect));
-        button.setContentAreaFilled(false);
+        buttonTutorial = new JButton("Tutorial");
+        buttonTutorial.setBounds(636, 50, 129, 30);
+        buttonTutorial.setFocusable(false);
+        buttonTutorial.setForeground(Color.WHITE);
+        buttonTutorial.setFont(new Font("Arial Black", Font.PLAIN, 14));
+        buttonTutorial.addActionListener(this);
+        buttonTutorial.setBorderPainted(false);
+        buttonTutorial.setBackground(new Color(0x262626));
+        buttonTutorial.addMouseListener(new ButtonMouseListenerMenu(buttonTutorial, labelButtonEffectTutorial));
+        buttonTutorial.setContentAreaFilled(false);
 
         URL labelTextfieldURL = getClass().getResource("/greenChartTitle.png");
         ImageIcon labelTextfield = null;
@@ -305,11 +308,11 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         layeredPane.add(buttonBack, Integer.valueOf(1));
         layeredPane.add(buttonEnterData, Integer.valueOf(1));
         layeredPane.add(buttonClear, Integer.valueOf(1));
-        layeredPane.add(button, Integer.valueOf(1));
+        layeredPane.add(buttonTutorial, Integer.valueOf(1));
         layeredPane.add(labelButtonEffectBack, Integer.valueOf(1));
         layeredPane.add(labelButtonEffectEnterData, Integer.valueOf(1));
         layeredPane.add(labelButtonEffectClear, Integer.valueOf(1));
-        layeredPane.add(labelButtonEffect, Integer.valueOf(1));
+        layeredPane.add(labelButtonEffectTutorial, Integer.valueOf(1));
 
         layeredPane.add(buttonOpenFile);
         layeredPane.add(labelButtonEffectOpenFile);
@@ -329,18 +332,15 @@ public class OpenFileFrame extends JFrame implements ActionListener {
         layeredPane.add(labelMenuLine5, Integer.valueOf(1));
         layeredPane.add(labelMenuLine6, Integer.valueOf(1));
 
-
         layeredPane.add(labelException);
 
         layeredPane.add(labelTextfieldChartTitle, Integer.valueOf(2));
         layeredPane.add(labelTextfieldRow, Integer.valueOf(2));
         layeredPane.add(labelTextfieldColumn, Integer.valueOf(2));
 
-
-
         this.getContentPane().setBackground(new Color(0x262626));
         this.setLayout(null);
-        this.setTitle("Open File Frame");
+        this.setTitle("Open File");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(816, 800);
         this.setLocationRelativeTo(null);
@@ -364,10 +364,15 @@ public class OpenFileFrame extends JFrame implements ActionListener {
             clear();
         }
 
+        if (e.getSource() == buttonTutorial){
+            this.dispose();
+            TutorialFrame tutorialFrame = new TutorialFrame();
+        }
+
         if (e.getSource() == buttonOpenFile){
             JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel & CSV Files","xlsx", "csv");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel & CSV Files","xlsx", "xls", "csv");
             fileChooser.setFileFilter(filter);
 
             int response = fileChooser.showOpenDialog(null);
@@ -380,16 +385,17 @@ public class OpenFileFrame extends JFrame implements ActionListener {
                 File file = new File(filePath);
                 String fileExtension = getFileExtension(file);
 
-                System.out.println(file);
-
                 buttonOpenFile.setHorizontalAlignment(SwingConstants.LEFT);
                 buttonOpenFile.setText(file.getName());
 
 
-                if (fileExtension.equalsIgnoreCase("xlsx")){ // If it's an Excel file...
+                if (fileExtension.equalsIgnoreCase("xlsx") || fileExtension.equalsIgnoreCase("xls")){ // If it's an Excel file...
                     buttonOpenFile.setIcon(new ImageIcon(getClass().getResource("/excelButtonIcon.png")));
 
                     try {
+                        WorkbookFactory.addProvider(new HSSFWorkbookFactory());
+                        WorkbookFactory.addProvider(new XSSFWorkbookFactory());
+
                         ExcelReader excelReader = new ExcelReader(filePath);
                         rowsCount = excelReader.getRowCount();
                         columnsCount = excelReader.getColumnCount();
@@ -436,7 +442,7 @@ public class OpenFileFrame extends JFrame implements ActionListener {
                     labelException.setText("Please select an Excel or CSV file.");
                 }
 
-                textFieldNumberOfRows.setText( String.valueOf(rowsCount));
+                textFieldNumberOfRows.setText(String.valueOf(rowsCount));
                 textFieldNumberOfColumns.setText(String.valueOf(columnsCount));
             }
         }
