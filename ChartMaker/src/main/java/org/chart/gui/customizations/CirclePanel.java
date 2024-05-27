@@ -2,10 +2,17 @@ package org.chart.gui.customizations;
 
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
 
 public class CirclePanel extends JPanel {
-    public CirclePanel() {
+    private URL iconURL;
+    private ImageIcon imageIcon;
+
+    public CirclePanel(URL iconURL) {
+        this.iconURL = iconURL;
+
         setOpaque(false);
+        imageIcon = new ImageIcon(iconURL);
     }
 
     @Override
@@ -19,7 +26,14 @@ public class CirclePanel extends JPanel {
         int x = (width - diameter) / 2;
         int y = (height - diameter) / 2;
 
-        g.setColor(Color.BLACK);
-        g.fillOval(x, y, diameter, diameter);
+
+        // Draw the PNG image in the center of the circle
+        if (imageIcon != null) {
+            int imageWidth = imageIcon.getIconWidth();
+            int imageHeight = imageIcon.getIconHeight();
+            int imageX = x + (diameter - imageWidth) / 2;
+            int imageY = y + (diameter - imageHeight) / 2;
+            g.drawImage(imageIcon.getImage(), imageX, imageY, this);
+        }
     }
 }

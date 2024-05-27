@@ -49,12 +49,17 @@ public class ChartFrame extends JFrame implements ActionListener {
         this.xAxisLabel = xAxisLabel;
         this.yAxisLabel = yAxisLabel;
 
+        URL iconURL = getClass().getResource("/iconSmall.png");
+        assert iconURL != null;
+        ImageIcon icon  = new ImageIcon(iconURL);
+        this.setIconImage(icon.getImage());
+
         JPanel panelMenu = new JPanel();
         panelMenu.setBackground(new Color(0x363636));
         panelMenu.setBounds(0, 40, 800, 50);
         panelMenu.setLayout(null);
 
-        CirclePanel panelCircle = new CirclePanel();
+        CirclePanel panelCircle = new CirclePanel(iconURL);
         panelCircle.setBounds(360, 25, 80, 80);
 
         ImageIcon lineGreen = null;
@@ -238,7 +243,7 @@ public class ChartFrame extends JFrame implements ActionListener {
         buttonSave.addMouseListener(new ButtonMouseListener(buttonSave, labelButtonEffectSave));
 
         JLabel labelInfoText = new JLabel("This app made by Kerem YILMAZ, Salih Kerim ASLAN, Semih BEKDAŞ, Ahmet Emin ÇAKIR in 2024");
-        labelInfoText.setFont(new Font("Cambria Math", Font.PLAIN, 16));
+        labelInfoText.setFont(new Font("Cambria Math", Font.PLAIN, 12));
         labelInfoText.setForeground(Color.WHITE);
         labelInfoText.setBounds(0,730,800,20);
         labelInfoText.setHorizontalAlignment(JLabel.CENTER);

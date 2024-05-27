@@ -20,6 +20,11 @@ public class XYTitleDialog extends JDialog implements ActionListener {
     public XYTitleDialog(Frame parent) {
         super(parent, "Enter X-Y Title", true);
 
+        URL iconURL = getClass().getResource("/icon.png");
+        assert iconURL != null;
+        ImageIcon icon  = new ImageIcon(iconURL);
+        this.setIconImage(icon.getImage());
+
         URL labelTextfieldURL = getClass().getResource("/greenChartTitle.png");
         ImageIcon labelTextfield = null;
         if (labelTextfieldURL == null) {
@@ -109,6 +114,7 @@ public class XYTitleDialog extends JDialog implements ActionListener {
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         this.setSize(736, 200);
         this.setLocationRelativeTo(parent);
+        this.setTitle("Enter X-Y Title");
         this.setResizable(false);
     }
 

@@ -48,12 +48,17 @@ public class OpenFileFrame extends JFrame implements ActionListener {
     String[][] data;
 
     public OpenFileFrame(){
+        URL iconURL = getClass().getResource("/iconSmall.png");
+        assert iconURL != null;
+        ImageIcon icon  = new ImageIcon(iconURL);
+        this.setIconImage(icon.getImage());
+
         JPanel panelMenu = new JPanel();
         panelMenu.setBackground(new Color(0x363636));
         panelMenu.setBounds(0, 40, 800, 50);
         panelMenu.setLayout(null);
 
-        CirclePanel panelCircle = new CirclePanel();
+        CirclePanel panelCircle = new CirclePanel(iconURL);
         panelCircle.setBounds(360, 25, 80, 80);
 
         ImageIcon lineGreen = null;

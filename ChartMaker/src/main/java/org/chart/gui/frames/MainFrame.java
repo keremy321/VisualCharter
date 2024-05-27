@@ -31,17 +31,17 @@ public class MainFrame extends JFrame implements ActionListener {
         panelBottom.setBounds(0, 200, 920, 600);
         panelBottom.setLayout(null);
 
-        CirclePanel panelCircle = new CirclePanel();
+        CirclePanel panelCircle = new CirclePanel(iconURL);
         panelCircle.setBounds(320, 120, 160, 160);
 
-        JLabel labelWelcomeText = new JLabel("Welcome to the App!");
+        JLabel labelWelcomeText = new JLabel("Welcome to the Visual Charter!");
         labelWelcomeText.setFont(new Font("Arial Black", Font.PLAIN, 24));
         labelWelcomeText.setForeground(Color.WHITE);
         labelWelcomeText.setBounds(0,100,800,30);
         labelWelcomeText.setHorizontalAlignment(JLabel.CENTER);
 
         JLabel labelInfoText = new JLabel("This app made by Kerem YILMAZ, Salih Kerim ASLAN, Semih BEKDAŞ, Ahmet Emin ÇAKIR in 2024");
-        labelInfoText.setFont(new Font("Cambria Math", Font.PLAIN, 16));
+        labelInfoText.setFont(new Font("Cambria Math", Font.PLAIN, 12));
         labelInfoText.setForeground(Color.WHITE);
         labelInfoText.setBounds(0,530,800,20);
         labelInfoText.setHorizontalAlignment(JLabel.CENTER);
@@ -110,7 +110,7 @@ public class MainFrame extends JFrame implements ActionListener {
         panelBottom.add(labelButtonEffectTutorial);
 
         this.setLayout(null);
-        this.setTitle("Chart");
+        this.setTitle("Visual Charter");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(816, 800);
         this.setLocationRelativeTo(null);
