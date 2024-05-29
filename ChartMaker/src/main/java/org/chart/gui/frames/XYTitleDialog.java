@@ -108,6 +108,8 @@ public class XYTitleDialog extends JDialog implements ActionListener {
 
         layeredPane.add(buttonCreate);
         layeredPane.add(buttonCancel);
+        layeredPane.add(labelButtonEffectCreate);
+        layeredPane.add(labelButtonEffectCancel);
 
         this.getContentPane().setBackground(new Color(0x262626));
         this.setLayout(null);

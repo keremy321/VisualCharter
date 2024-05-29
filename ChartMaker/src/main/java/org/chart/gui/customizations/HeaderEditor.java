@@ -49,7 +49,7 @@ public class HeaderEditor extends MouseAdapter {
         String text = editor.getText();
         TableColumnModel columnModel = table.getColumnModel();
         columnModel.getColumn(editingColumn).setHeaderValue(text);
-        table.getTableHeader().repaint(); // Repaint the table header
+        table.getTableHeader().repaint();
         editor.setVisible(false);
     }
 }

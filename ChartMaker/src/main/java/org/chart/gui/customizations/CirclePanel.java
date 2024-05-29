@@ -26,8 +26,6 @@ public class CirclePanel extends JPanel {
         int x = (width - diameter) / 2;
         int y = (height - diameter) / 2;
 
-
-        // Draw the PNG image in the center of the circle
         if (imageIcon != null) {
             int imageWidth = imageIcon.getIconWidth();
             int imageHeight = imageIcon.getIconHeight();
